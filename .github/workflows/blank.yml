@@ -14,7 +14,7 @@ jobs:
           ref: main
 
       - name: Create pull request in Databricks repository
-        uses: databrickslabs/databricks-automation@master
+        uses: yu-iskw/databricks-automation@v1
         with:
           token: ${{ secrets.DATABRICKS_TOKEN }}
           command: workspace-import
