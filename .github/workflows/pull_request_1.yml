@@ -1,0 +1,43 @@
+on:
+  push:
+    branches:
+      - main
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Databricks repository
+        uses: actions/checkout@v2
+        with:
+          repository: <DATABRICKS REPOSITORY>
+          ref: main
+          token: ${{ secrets.DATABRICKS_TOKEN }}
+
+      - name: Create new branch
+        run: git checkout -b data-1_newbranch
+
+      - name: Checkout Git repository
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Copy changes to Databricks repository
+        run: cp -r 'www.github.com/Datapoj-ops/data-1.git'/* '/Repos/navinkumar.gandhi@agilisium.com'
+
+      - name: Commit changes
+        run: |
+          git config --global user.email "<YOUR EMAIL>"
+          git config --global user.name "<YOUR NAME>"
+          git add .
+          git commit -m "Automated PR creation"
+          git push --set-upstream origin <NEW BRANCH NAME>
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Automated PR creation"
+          title: "Automated PR creation"
+          body: "This pull request was created automatically."
+          branch: New_branch
+          base: main
