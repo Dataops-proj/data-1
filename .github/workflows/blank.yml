@@ -1,22 +1,23 @@
-name: Push data to Databricks
+name: Import Git repository to Databricks
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  push-data:
+  import-to-databricks:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Git repository
         uses: actions/checkout@v2
-      - name: Install Databricks CLI
-        run: |
-          pip install databricks-cli
-      - name: Push data to Databricks
-        env:
-          DATABRICKS_HOST: https://agilisium.cloud.databricks.com
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        run: |
-          databricks workspace import_dir ./data-1 /Users/Navinkumar.Gandhi@agilisium.com/ --overwrite
+        with:
+          ref: main
+
+      - name: Create pull request in Databricks repository
+        uses: databrickslabs/databricks-automation@master
+        with:
+          token: ${{ secrets.DATABRICKS_TOKEN }}
+          command: workspace-import
+          source_path: ./data-1
+          target_path: /Users/Navinkumar.Gandhi@agilisium.com/new
+          overwrite: true
