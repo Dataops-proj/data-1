@@ -42,5 +42,5 @@ jobs:
 
       - name: Push changes to Databricks
         run: |
-          databricks configure --token "$DATABRICKS_TOKEN" --url "https://agilisium.cloud.databricks.com"
+          databricks configure --token "$DATABRICKS_TOKEN" --url "$DATABRICKS_HOST"
           databricks workspace import_dir /github/workspace/databricks /Repos/Navinkumar.Gandhi@agilisium.com/data-1 --overwrite
