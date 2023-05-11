@@ -20,6 +20,13 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.sha }}
+      - name: Add file to Git repository
+        run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          git add /path/to/local/folder/file
+          git commit -m "Add new file"
+          git push
       - name: Upload files to Databricks workspace
         run: |
           databricks workspace import_dir ${{ github.workspace }} /Users/navinkumar.gandhi@agilisium.com/gittodb12
