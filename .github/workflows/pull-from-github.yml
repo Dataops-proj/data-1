@@ -24,7 +24,7 @@ jobs:
           pip install databricks-cli
       - name: Clone Databricks repository
         run: |
-          databricks workspace export_dir/Repos/Navinkumar.Gandhi@agilisium.com/data-1/github/workspace/databricks
+          databricks workspace export_dir /Repos/Navinkumar.Gandhi@agilisium.com/data-1 /github/workspace/databricks
       - name: Pull changes from GitHub
         run: |
           cd /github/workspace/databricks
