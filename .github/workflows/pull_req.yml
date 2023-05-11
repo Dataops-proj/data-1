@@ -1,0 +1,31 @@
+name: Databricks PR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  databricks-pr:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Git repository
+      uses: actions/checkout@v2
+
+    - name: Check for new files
+      run: |
+        if git diff --name-only HEAD^ HEAD | grep my-folder/; then
+          echo "New files added"
+        else
+          echo "No new files added"
+          exit 1
+        fi
+
+    - name: Create Databricks PR
+      uses: databrickslabs/automated-databricks-config@v0.3.2
+      with:
+        databricks-host: https://agilisium.cloud.databricks.com
+        databricks-token: dapib637f5c0840a673425b2009a679fc31f
+        source-path: data-2/
+        target-path: /Users/navinkumar.gandhi@agilisium.com/newgit/
+        commit-message: "Add new files from Git"
