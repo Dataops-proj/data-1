@@ -1,0 +1,26 @@
+name: Create Databricks pull request
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.DATABRICKS_TOKEN }}
+          title: Update Databricks notebook
+          branch: main
+          commit-message: Update Databricks notebook
+          body: |
+            This pull request was automatically created by a GitHub Actions workflow.
+          base: main
+          branch-suffix: timestamp
+          delete-branch: true
