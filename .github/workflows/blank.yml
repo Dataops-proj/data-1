@@ -14,9 +14,11 @@ jobs:
       - name: Install Databricks CLI
         run: |
           pip install databricks-cli
-      - name: Push data to Databricks
-        env:
-          DATABRICKS_HOST: https://agilisium.cloud.databricks.com
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        run: |
-          databricks workspace import_dir ./data-1 /Users/Navinkumar.Gandhi@agilisium.com/ --overwrite
+      - name: Create pull request in Databricks repository
+        uses: databrickslabs/databricks-automation@master
+        with:
+            token: ${{ secrets.DATABRICKS_PAT }}
+            command: workspace-import
+            source_path: ./data-1
+            target_path: /Users/NavinKumar.Gandhi@agilisium.com
+            overwrite: true
