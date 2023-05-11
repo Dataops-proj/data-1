@@ -19,4 +19,4 @@ jobs:
           DATABRICKS_HOST: https://agilisium.cloud.databricks.com
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
-          databricks workspace import_dir ./data-1 /Users/Navinkumar.gandhi@agilisium.com/ --overwrite
+          databricks workspace import_dir /data-1 /Users/Navinkumar.gandhi@agilisium.com/ --overwrite
