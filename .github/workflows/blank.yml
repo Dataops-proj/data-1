@@ -13,16 +13,19 @@ jobs:
         run: |
           wget -qO- https://packages.databricks.com/databricks-cli/installer.deb.sh | bash
           apt-get install databricks-cli
+      - name: Configure Databricks CLI
+        run: |
+          databricks configure --token "${{ secrets.DATABRICKS_TOKEN }}" --url "https://agilisium.cloud.databricks.com"
       - name: Create Databricks workspace
         run: |
-          databricks workspace mkdirs /Users/navinkumar.gandhi@agilisium.com/gittodb12
+          databricks workspace mkdirs /Users/navinkumar.gandhi@agilisium.com/gittodb13
       - name: Download files from GitHub repo
         uses: actions/checkout@v2
         with:
           ref: ${{ github.sha }}
       - name: Upload files to Databricks workspace
         run: |
-          databricks workspace import_dir ${{ github.workspace }} /Users/navinkumar.gandhi@agilisium.com/gittodb12
+          databricks workspace import_dir ${{ github.workspace }} /Users/navinkumar.gandhi@agilisium.com/gittodb13
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3
         with:
