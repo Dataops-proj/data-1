@@ -1,0 +1,22 @@
+name: Push data to Databricks
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  push-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Databricks CLI
+        run: |
+          pip install databricks-cli
+      - name: Push data to Databricks
+        env:
+          DATABRICKS_HOST: https://agilisium.cloud.databricks.com
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+        run: |
+          databricks workspace import_dir ./data-1 /Users/Navinkumar.gandhi@agilisium.com/ --overwrite
