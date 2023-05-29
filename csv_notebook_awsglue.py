@@ -41,4 +41,4 @@ else:
    df = df.withColumn('address', df['address'].cast('string'))
    df = df.withColumn('city', df['city'].cast('string'))
    df = df.withColumn('FULLNAME', concat("first_name", "last_name"))
-df.write.mode('overwriteasdwseff').format('csv').save('s3a://blue-buckets/two/')
+df.write.mode('overwriteasdwsfeff').format('csv').save('s3a://blue-buckets/two/')
