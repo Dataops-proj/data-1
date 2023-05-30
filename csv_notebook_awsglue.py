@@ -8,8 +8,8 @@ from pyspark.sql.functions import col
 spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
 sc = spark.sparkContext
 
-client = hvac.Client(url='http://127.0.0.1:8200', token='hvs.sL1Obxm8SuQGR6KnzwUTH8JV')
-s_s3_credentials = client.read('kv/data/data/source_s3_credentials')['data']['data']
+client = hvac.Client(url='http://54.163.61.208:8200', token='s.2Ji56wKC2oxwnK4UelSDMFow')
+s_s3_credentials = client.read('kv/data/data/s3_credentials')['data']['data']
 access_key = s_s3_credentials.get('access_key')
 secret_key = s_s3_credentials.get('secret_key')
 aws_region = 'ap-south-1'
