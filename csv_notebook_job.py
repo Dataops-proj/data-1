@@ -18,7 +18,7 @@ sc._jsc.hadoopConfiguration().set('fs.s3a.access.key', access_key)
 sc._jsc.hadoopConfiguration().set('fs.s3a.secret.key', secret_key)
 sc._jsc.hadoopConfiguration().set('fs.s3a.endpoint', 's3.' + aws_region + '.amazonaws.com')
 
-df = spark.read.format('csv').options(header='True').load('s3://yellow-buckets/us-500.csv')#Validation-notempty 
+df = spark.read.format('csv').options(header='True').load('s3://yellow-buckets//us-500.csv')#Validation-notempty 
 df = df.filter(~col('first_name').isNull()).limit(100)
 df = df.filter(~col('last_name').isNull()).limit(100)
 
