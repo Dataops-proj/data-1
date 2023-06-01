@@ -12,7 +12,7 @@ client = hvac.Client(url='http://54.163.61.208:8200', token='s.2Ji56wKC2oxwnK4Ue
 s_s3_credentials = client.read('kv/data/data/s3_credentials')['data']['data']
 access_key = s_s3_credentials.get('access_key')
 secret_key = s_s3_credentials.get('secret_key')
-aws_region = 'test-repo-buckets'
+aws_region = 'us-east-1'
 
 sc._jsc.hadoopConfiguration().set('fs.s3a.access.key', access_key)
 sc._jsc.hadoopConfiguration().set('fs.s3a.secret.key', secret_key)
