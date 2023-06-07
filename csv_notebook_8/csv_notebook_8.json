@@ -1,5 +1,6 @@
 {
   "name" : "csv_notebook_8",
+  "description" : "",
   "role" : "arn:aws:iam::962050899073:role/glue-data-ops",
   "executionProperty" : {
     "maxConcurrentRuns" : 1
@@ -12,6 +13,7 @@
   "defaultArguments" : {
     "--extra-py-files" : "s3://test-repo-buckets/glue_dependencies.zip",
     "--job-bookmark-option" : "job-bookmark-disable",
+    "--enable-job-insights" : "true",
     "--job-language" : "python"
   },
   "maxRetries" : 1,
@@ -21,6 +23,7 @@
   "glueVersion" : "3.0",
   "numberOfWorkers" : 2,
   "workerType" : "G.1X",
+  "executionClass" : "STANDARD",
   "sourceControlDetails" : {
     "provider" : "GITHUB",
     "repository" : "data-1",
