@@ -1,0 +1,30 @@
+{
+  "name": "test-2",
+  "role": "arn:aws:iam::962050899073:role/glue-data-ops",
+  "executionProperty": {
+    "maxConcurrentRuns": 1
+  },
+  "command": {
+    "name": "glueetl",
+    "scriptLocation": "s3://test-repo-buckets/test-2.py",
+    "pythonVersion": "3"
+  },
+  "defaultArguments": {
+    "--extra-py-files": "s3://test-2/glue_dependencies.zip",
+    "--job-bookmark-option": "job-bookmark-disable",
+    "--job-language": "python"
+  },
+  "maxRetries": 1,
+  "allocatedCapacity": 2,
+  "timeout": 2880,
+  "maxCapacity": 2.0,
+  "glueVersion": "3.0",
+  "numberOfWorkers": 2,
+  "workerType": "G.1X",
+  "sourceControlDetails": {
+    "provider": "GITHUB",
+    "repository": "data-1",
+    "branch": "main",
+    "folder": "test-2"
+  }
+}
