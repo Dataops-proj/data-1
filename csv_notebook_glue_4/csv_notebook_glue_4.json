@@ -6,11 +6,11 @@
   },
   "command": {
     "name": "glueetl",
-    "scriptLocation": "s3://red-buckets/csv_notebook_glue_4.py",
+    "scriptLocation": "s3://test-repo-buckets/csv_notebook_glue_4.py",
     "pythonVersion": "3"
   },
   "defaultArguments": {
-    "--extra-py-files": "s3://red-buckets/glue_dependencies.zip",
+    "--extra-py-files": "s3://test-repo-buckets/glue_dependencies.zip",
     "--job-bookmark-option": "job-bookmark-disable",
     "--job-language": "python"
   },
