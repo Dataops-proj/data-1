@@ -8,7 +8,7 @@ from pyspark.sql.functions import col
 spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
 sc = spark.sparkContext
 
-client = hvac.Client(url='http://43.205.206.20:8200', token='s.xPkHzfN7jxpyb5oAGBqx4WIC')
+client = hvac.Client(url='http://3.6.40.231:8200', token='s.xPkHzfN7jxpyb5oAGBqx4WIC')
 s_s3_credentials = client.read('kv/data/data/s3_credentials')['data']['data']
 access_key = s_s3_credentials.get('access_key')
 secret_key = s_s3_credentials.get('secret_key')
