@@ -1,0 +1,30 @@
+{
+  "name": "my_glue_job",
+  "role": "arn:aws:iam::962050899073:role/Glue_vault123",
+  "executionProperty": {
+    "maxConcurrentRuns": 1
+  },
+  "command": {
+    "name": "glueetl",
+    "scriptLocation": "s3://test-repo-buckets/my_glue_job.py",
+    "pythonVersion": "3"
+  },
+  "defaultArguments": {
+    "--extra-py-files": "s3://test-repo-buckets/glue_dependencies.zip",
+    "--job-bookmark-option": "job-bookmark-disable",
+    "--job-language": "python"
+  },
+  "maxRetries": 1,
+  "allocatedCapacity": 2,
+  "timeout": 2880,
+  "maxCapacity": 2.0,
+  "glueVersion": "3.0",
+  "numberOfWorkers": 2,
+  "workerType": "G.1X",
+  "sourceControlDetails": {
+    "provider": "GITHUB",
+    "repository": "data-1",
+    "branch": "main",
+    "folder": "my_glue_job"
+  }
+}
