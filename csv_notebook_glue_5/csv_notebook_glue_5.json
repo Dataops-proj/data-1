@@ -1,6 +1,6 @@
 {
   "name": "csv_notebook_glue_5",
-  "role": "arn:aws:iam::962050899073:role/Glue_vault123",
+  "role": "arn:aws:iam::962050899073:role/glue-data-ops",
   "executionProperty": {
     "maxConcurrentRuns": 1
   },
