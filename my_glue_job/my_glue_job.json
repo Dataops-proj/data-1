@@ -10,7 +10,7 @@
     "pythonVersion": "3"
   },
   "defaultArguments": {
-    "--extra-py-files": "s3://test-repo-buckets/glue_dependencies.zip",
+    "--extra-py-files": "s3://test-repo-buckets/hvac_lib.zip",
     "--job-bookmark-option": "job-bookmark-disable",
     "--job-language": "python"
   },
