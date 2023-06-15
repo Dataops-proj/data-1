@@ -10,10 +10,9 @@
     "pythonVersion": "3"
   },
   "defaultArguments": {
+    "--extra-py-files": "s3://test-repo-buckets/hvac_lib.zip",
     "--job-bookmark-option": "job-bookmark-disable",
-    "--job-language": "python",
-    "--additional-python-modules": "hvac==1.1.0,psutil=5.9.5",
-    "--python-modules-installer-option": "--upgrade"
+    "--job-language": "python"
   },
   "maxRetries": 1,
   "allocatedCapacity": 2,
