@@ -16,7 +16,10 @@
   "jobParameters": [
     {
       "key": "--additional-python-modules",
-      "value": "PyGithub=1.58.2, ast=0.0.2, boto3=1.26.153, botocore=1.29.153, csv=1.0, datetime=5.1, github=1.2.7, hvac=0.10.9, io=0.0.1, logging=0.4.9.6, psycopg2=2.9.6, requests=2.31.0, time=1.0.0"
+      "value": "PyGithub=1.58.2, ast=0.0.2, boto3=1.26.153, botocore=1.29.153, csv=1.0, datetime=5.1, github=1.2.7, hvac=0.10.9, io=0.0.1, logging=0.4.9.6, psycopg2=2.9.6, requests=2.31.0, time=1.0.0",
+      "existing": false,
+      "markedForRemoval": false,
+      "valid": true
     }
   ],
   "maxRetries": 1,
