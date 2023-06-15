@@ -12,7 +12,7 @@
   "defaultArguments": {
     "--job-bookmark-option": "job-bookmark-disable",
     "--job-language": "python",
-    "--additional-python-modules": "hvac=1.1.0"
+    "--additional-python-modules": "hvac==1.1.0"
   },
   "maxRetries": 1,
   "allocatedCapacity": 2,
