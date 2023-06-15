@@ -11,8 +11,7 @@
   },
   "defaultArguments": {
     "--job-bookmark-option": "job-bookmark-disable",
-    "--job-language": "python",
-    "--additional-python-modules": "hvac==1.1.0, github==1.2.7"
+    "--job-language": "python"
   },
   "maxRetries": 1,
   "allocatedCapacity": 2,
