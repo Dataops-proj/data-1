@@ -10,7 +10,7 @@
     "pythonVersion": "3"
   },
   "defaultArguments": {
-    "--extra-py-files": "s3://red-buckets/python_library_zips/boto3.zip,s3://red-buckets/python_library_zips/botocore.zip,s3://red-buckets/python_library_zips/github.zip,s3://red-buckets/python_library_zips/hvac 2.zip,s3://red-buckets/python_library_zips/hvac.zip,s3://red-buckets/python_library_zips/logging.zip,s3://red-buckets/python_library_zips/oauthlib.zip,s3://red-buckets/python_library_zips/requests.zip",
+    "--extra-py-files": "s3://red-buckets/python_library_zips/hvac.zip,s3://red-buckets/python_library_zips/logging.zip,s3://red-buckets/python_library_zips/oauthlib.zip,s3://red-buckets/python_library_zips/requests.zip",
     "--job-bookmark-option": "job-bookmark-disable",
     "--job-language": "python"
   },
