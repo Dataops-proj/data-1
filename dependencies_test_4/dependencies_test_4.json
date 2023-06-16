@@ -6,7 +6,7 @@
   },
   "command": {
     "name": "glueetl",
-    "scriptLocation": "s3://test-repo-buckets/dependencies_test_4.py",
+    "scriptLocation": "s3://red-buckets/dependencies_test_4.py",
     "pythonVersion": "3"
   },
   "defaultArguments": {
