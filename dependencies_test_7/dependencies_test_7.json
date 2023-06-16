@@ -1,0 +1,30 @@
+{
+  "name": "dependencies_test_7",
+  "role": "arn:aws:iam::962050899073:role/Glue_vault123",
+  "executionProperty": {
+    "maxConcurrentRuns": 1
+  },
+  "command": {
+    "name": "glueetl",
+    "scriptLocation": "s3://red-buckets/dependencies_test_7.py",
+    "pythonVersion": "3"
+  },
+  "defaultArguments": {
+    "--extra-py-files": "s3://red-buckets/python_library_zips/hvac.zip,s3://red-buckets/python_library_zips/logging.zip,s3://red-buckets/python_library_zips/oauthlib.zip,s3://red-buckets/python_library_zips/requests.zip",
+    "--job-bookmark-option": "job-bookmark-disable",
+    "--job-language": "python"
+  },
+  "maxRetries": 1,
+  "allocatedCapacity": 2,
+  "timeout": 2880,
+  "maxCapacity": 2.0,
+  "glueVersion": "3.0",
+  "numberOfWorkers": 2,
+  "workerType": "G.1X",
+  "sourceControlDetails": {
+    "provider": "GITHUB",
+    "repository": "data-1",
+    "branch": "main",
+    "folder": "dependencies_test_7"
+  }
+}
