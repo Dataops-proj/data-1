@@ -14,7 +14,7 @@
     "--job-bookmark-option": "job-bookmark-disable",
     "--job-language": "python"
   },
-  "maxRetries": 1,
+  "maxRetries": 0,
   "allocatedCapacity": 2,
   "timeout": 2880,
   "maxCapacity": 2.0,
