@@ -10,7 +10,7 @@
     "pythonVersion": "3"
   },
   "defaultArguments": {
-    "--extra-py-files": "s,3,:,/,/,r,e,d,-,b,u,c,k,e,t,s,/,p,y,t,h,o,n,_,l,i,b,r,a,r,y,_,z,i,p,s,/,h,v,a,c,.,z,i,p",
+    "--extra-py-files": "s,3,:,/,/,r,e,d,-,b,u,c,k,e,t,s,/,p,y,t,h,o,n,_,l,i,b,r,a,r,y,_,z,i,p,s,/,h,v,a,c,.,z,i,p,\n",
     "--job-bookmark-option": "job-bookmark-disable",
     "--job-language": "python"
   },
