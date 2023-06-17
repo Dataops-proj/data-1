@@ -10,7 +10,7 @@
     "pythonVersion": "3"
   },
   "defaultArguments": {
-    "--extra-py-files": "s3://red-buckets/python_library_zips/github.zip,s3://red-buckets/python_library_zips/hvac.zip",
+    "--extra-py-files": "s3://python-libs-glue/github.zip,s3://python-libs-glue/hvac.zip",
     "--job-bookmark-option": "job-bookmark-disable",
     "--job-language": "python"
   },
