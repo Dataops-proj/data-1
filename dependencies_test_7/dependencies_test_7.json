@@ -10,7 +10,7 @@
     "pythonVersion": "3"
   },
   "defaultArguments": {
-    "--extra-py-files": "s3://red-buckets/python_library_zips/github-1.2.7.dist-info.zip,s3://red-buckets/python_library_zips/github.zip,s3://red-buckets/python_library_zips/hvac-1.1.0.dist-info.zip,s3://red-buckets/python_library_zips/hvac.zip",
+    "--extra-py-files": "s,3,:,/,/,r,e,d,-,b,u,c,k,e,t,s,/,p,y,t,h,o,n,_,l,i,b,r,a,r,y,_,z,i,p,s,/,h,v,a,c,.,z,i,p",
     "--job-bookmark-option": "job-bookmark-disable",
     "--job-language": "python"
   },
