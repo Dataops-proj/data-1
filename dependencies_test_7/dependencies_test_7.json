@@ -13,7 +13,7 @@
     "--job-bookmark-option": "job-bookmark-disable",
     "--job-language": "python",
     "--additional-python-modules": "hvac==1.1.0,oauthlib==3.2.2,pytorch==1.0.2",
-    "--pyton-modules-installer-option": "--no-deps"
+    "--python-modules-installer-option": "--no-deps"
   },
   "maxRetries": 0,
   "allocatedCapacity": 2,
