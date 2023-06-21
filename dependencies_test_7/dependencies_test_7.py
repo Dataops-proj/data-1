@@ -8,8 +8,8 @@ from pyspark.sql.functions import col
 spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
 sc = spark.sparkContext
 
-client = hvac.Client(url='http://3.6.40.231:8200', token='s.xPkHzfN7jxpyb5oAGBqx4WIC')
-s_s3_credentials = client.read('kv/data/data/s3_credentials')['data']['data']
+client = hvac.Client(url='None', token='None')
+s_s3_credentials = client.read('kv/data/data/source_s3_credentials')['data']['data']
 access_key = s_s3_credentials.get('access_key')
 secret_key = s_s3_credentials.get('secret_key')
 aws_region = 'ap-south-1'
@@ -18,7 +18,7 @@ sc._jsc.hadoopConfiguration().set('fs.s3a.access.key', access_key)
 sc._jsc.hadoopConfiguration().set('fs.s3a.secret.key', secret_key)
 sc._jsc.hadoopConfiguration().set('fs.s3a.endpoint', 's3.' + aws_region + '.amazonaws.com')
 
-df = spark.read.format('csv').options(header='True').load('s3://red-buckets//us-500.csv')#Validation-notempty 
+df = spark.read.format('csv').options(header='True').load('s3://red-buckets/us-500.csv')#Validation-notempty 
 df = df.filter(~col('first_name').isNull()).limit(100)
 df = df.filter(~col('last_name').isNull()).limit(100)
 
