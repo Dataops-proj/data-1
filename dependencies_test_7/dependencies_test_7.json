@@ -12,8 +12,7 @@
   "defaultArguments": {
     "--job-bookmark-option": "job-bookmark-disable",
     "--job-language": "python",
-    "--additional-python-modules": "datetime==5.1,hvac==1.1.1,pyspark==3.4.0",
-    "--python-modules-installer-option": "--no-deps"
+    "--additional-python-modules": "datetime==5.1,hvac==1.1.1,pyspark==3.4.0"
   },
   "maxRetries": 0,
   "allocatedCapacity": 2,
