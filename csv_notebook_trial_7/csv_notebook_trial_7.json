@@ -15,11 +15,11 @@
     "--additional-python-modules": "datetime==5.1,hvac==1.1.1,pyspark==3.4.0"
   },
   "maxRetries": 0,
-  "allocatedCapacity": 2,
+  "allocatedCapacity": "",
   "timeout": 2880,
   "maxCapacity": 2.0,
   "glueVersion": "3.0",
-  "numberOfWorkers": 2,
+  "numberOfWorkers": 10,
   "workerType": "G.1X",
   "sourceControlDetails": {
     "provider": "GITHUB",
