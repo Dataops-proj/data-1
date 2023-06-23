@@ -18,6 +18,7 @@ logging.getLogger('').addHandler(log_file_handler)
 
 try:
 	logging.info('Starting data processing pipeline...')
+
 	spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
 	sc = spark.sparkContext
 	logging.info('Spark Context is created')
@@ -36,19 +37,22 @@ try:
 	sc._jsc.hadoopConfiguration().set('fs.s3a.endpoint', 's3.' + aws_region + '.amazonaws.com')
 
 	#Read data from S3 bucket
-	df = spark.read.format('csv').options(header='True').load('s3://red-buckets/us-500.csv')#Validation-notempty 
-df = df.filter(~col('first_name').isNull()).limit(100)
-df = df.filter(~col('last_name').isNull()).limit(100)
+	df = spark.read.format('csv').options(header='True').load('s3://red-buckets/us-500.csv')
+#Validation-notempty 
+
+	df = df.filter(~col('first_name').isNull()).limit(100)
+
+	df = df.filter(~col('last_name').isNull()).limit(100)
 
 #Validation-custom 
 
-if df.filter(df['company_name'].rlike('@')).count() > 0: 
+	if df.filter(df['company_name'].rlike('@')).count() > 0: 
       raise ValueError('Custom validation failed. Stopping processing.')  
 
-elif df.filter(df['city'].rlike('@')).count() > 0: 
+	elif df.filter(df['city'].rlike('@')).count() > 0: 
       raise ValueError('Custom validation failed. Stopping processing.')  
 
-elif df.filter(df['address'].rlike('@')).count() > 0: 
+	elif df.filter(df['address'].rlike('@')).count() > 0: 
       raise ValueError('Custom validation failed. Stopping processing.')  
 
 #Transformations
