@@ -55,7 +55,7 @@ try:
 		logging.error('Custom validation failed. Stopping processing.').count() > 0: 
 		raise ValueError('Custom validation failed. Stopping processing.')  
 
-#Transformations
+	#Transformations
 	else:
 		df = df.withColumn('first_name', df['first_name'].cast('string'))
 		df = df.withColumn('last_name', df['last_name'].cast('string'))
