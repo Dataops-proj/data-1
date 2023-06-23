@@ -74,5 +74,3 @@ s3 = boto3.client('s3', aws_access_key_id=s_s3_credentials.get('access_key'), aw
 # Upload custom log file to S3
 s3.upload_file('audit_logs.log', 'blue-buckets', 'logs/audit_logs.log')
 logging.info('Custom log file saved to S3 successfully.')
-# s3_glue.upload_file(key, bucket_name, key)
-logging.info('Glue log file saved to S3 successfully.')
