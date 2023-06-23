@@ -38,12 +38,13 @@ try:
 
 	#Read data from S3 bucket
 	df = spark.read.format('csv').options(header='True').load('s3://red-buckets/us-500.csv')
+	logging.info('Data loaded from S3 bucket successfully')
 
 	#Validation-notempty
 	df = df.filter(~col('first_name').isNull()).limit(100)
 	df = df.filter(~col('last_name').isNull()).limit(100)
-	#Validation-custom 
 
+	#Validation-custom
 	if df.filter(df['company_name'].rlike('@')).count() > 0: 
       raise ValueError('Custom validation failed. Stopping processing.')  
 	elif df.filter(df['city'].rlike('@')).count() > 0: 
