@@ -5,14 +5,13 @@ import pyspark
 from pyspark.sql.types import * 
 from pyspark.sql.functions import * 
 from datetime import datetime 
-from pyspark.sql import SparkSession#Configure logging
+from pyspark.sql import SparkSession
+#Configure logging
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s', level=logging.INFO) 
-#Create a custom log file handler 
-
-    log_file_handler = logging.FileHandler('audit.logs') 
-log_file_handler.setLevel(logging.INFO) 
-log_file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s')) 
-    
+#Create a custom log file handler
+log_file_handler = logging.FileHandler('audit.logs')
+log_file_handler.setLevel(logging.INFO)
+log_file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s'))
 logging.getLogger('').addHandler(log_file_handler)
 spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
 sc = spark.sparkContext
