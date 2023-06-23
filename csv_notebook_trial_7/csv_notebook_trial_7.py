@@ -10,7 +10,7 @@ from pyspark.sql import SparkSession
 
 #Configure logging
 indian_timezone=pytz.timezone('Asia/Kolkata')
-logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s', level=logging.INFO) 
+logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s', level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S %Z', force=True) 
 
 #Create a custom log file handler
 log_file_handler = logging.FileHandler('audit_logs.log')
