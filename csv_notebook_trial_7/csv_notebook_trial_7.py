@@ -20,12 +20,16 @@ try:
 	logging.info('Starting data processing pipeline...')
 	spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
 	sc = spark.sparkContext
+logging.info('Spark Context is created')
 
 	client = hvac.Client(url='http://3.6.40.231:8200', token='s.xPkHzfN7jxpyb5oAGBqx4WIC')
 	s_s3_credentials = client.read('kv/data/data/s3_credentials')['data']['data']
 	access_key = s_s3_credentials.get('access_key')
 	secret_key = s_s3_credentials.get('secret_key')
 	aws_region = 'ap-south-1'
+logging.info('AWS S3 credentials authenticated from Hvac Vault')
+
+#Configure Spark to use AWS S3 credentials
 
 	sc._jsc.hadoopConfiguration().set('fs.s3a.access.key', access_key)
 	sc._jsc.hadoopConfiguration().set('fs.s3a.secret.key', secret_key)
