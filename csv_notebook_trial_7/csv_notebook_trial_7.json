@@ -12,7 +12,7 @@
   "defaultArguments": {
     "--job-bookmark-option": "job-bookmark-disable",
     "--job-language": "python",
-    "--additional-python-modules": "r,e,q,u,i,r,e,m,e,n,t,s,.,t,x,t"
+    "--additional-python-modules": "datetime==5.1,hvac==1.1.1,logging==0.4.9.6"
   },
   "maxRetries": 0,
   "allocatedCapacity": "",
