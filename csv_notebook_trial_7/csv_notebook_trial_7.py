@@ -1,4 +1,5 @@
 import hvac 
+import pytz 
 import boto3 
 import logging 
 import pyspark 
@@ -8,6 +9,7 @@ from datetime import datetime
 from pyspark.sql import SparkSession
 
 #Configure logging
+indian_timezone=pytz.timezone('Asia/Kolkata')
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s', level=logging.INFO) 
 
 #Create a custom log file handler
