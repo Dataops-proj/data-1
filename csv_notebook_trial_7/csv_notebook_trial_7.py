@@ -26,7 +26,6 @@ try:
 
 	spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
 	sc = spark.sparkContext
-	spark.conf.set("spark.jars.packages", "org.apache.spark:spark-avro_2.12:3.1.2")
 	logging.info('Spark Context is created')
 
 	client = hvac.Client(url='http://3.6.40.231:8200', token='s.xPkHzfN7jxpyb5oAGBqx4WIC')
@@ -43,7 +42,7 @@ try:
 	sc._jsc.hadoopConfiguration().set('fs.s3a.endpoint', 's3.' + aws_region + '.amazonaws.com')
 
 	#Read data from S3 bucket
-	df = spark.read.format('avro').options(header='True').load('s3://red-buckets/sample.avro')
+	df = spark.read.format('parquet').options(header='True').load('s3://red-buckets/sample.snappy.parquet')
 	logging.info('Data loaded from S3 bucket successfully')
 
 	#Validation-notempty
@@ -66,7 +65,7 @@ try:
 		df = df.withColumn('address', df['address'].cast('string'))
 		df = df.withColumn('city', df['city'].cast('string'))
 		df = df.withColumn('FULLNAME', concat("first_name", "last_name"))
-	df.write.mode('overwrite').format('csv').save('s3a://blue-buckets/format/')
+	df.write.mode('overwrite').format('csv').save('s3a://blue-buckets/one/')
 	logging.info('Data written to S3 bucket successfully')
 	logging.info('Data processing pipeline completed.')
 except Exception as e:
