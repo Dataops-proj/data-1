@@ -26,6 +26,7 @@ try:
 
 	spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
 	sc = spark.sparkContext
+	spark.conf.set("spark.jars.packages", "org.apache.spark:spark-avro_2.12:3.1.2")
 	logging.info('Spark Context is created')
 
 	client = hvac.Client(url='http://3.6.40.231:8200', token='s.xPkHzfN7jxpyb5oAGBqx4WIC')
