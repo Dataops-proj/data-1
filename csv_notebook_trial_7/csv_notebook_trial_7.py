@@ -17,6 +17,9 @@ formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s', datefmt='
 handler = logging.StreamHandler()
 handler.setFormatter(formatter)
 logger.addHandler(handler)
+file_handler = logging.FileHandler('audit_logs.log')
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
 
 try:
 	logging.info('Starting data processing pipeline...')
