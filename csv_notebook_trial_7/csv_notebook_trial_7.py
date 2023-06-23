@@ -45,19 +45,34 @@ try:
 	df = df.filter(~col('last_name').isNull()).limit(100)
 
 	#Validation-custom
-	if df.filter(df['company_name'].rlike('@')).count() > 0: 
-      raise ValueError('Custom validation failed. Stopping processing.')  
-	elif df.filter(df['city'].rlike('@')).count() > 0: 
-      raise ValueError('Custom validation failed. Stopping processing.')  
-	elif df.filter(df['address'].rlike('@')).count() > 0: 
-      raise ValueError('Custom validation failed. Stopping processing.')  
+	if df.filter(df['company_name'].rlike('@'))
+		logging.error('Custom validation failed. Stopping processing.').count() > 0: 
+		raise ValueError('Custom validation failed. Stopping processing.')  
+	elif df.filter(df['city'].rlike('@'))
+		logging.error('Custom validation failed. Stopping processing.').count() > 0: 
+		raise ValueError('Custom validation failed. Stopping processing.')  
+	elif df.filter(df['address'].rlike('@'))
+		logging.error('Custom validation failed. Stopping processing.').count() > 0: 
+		raise ValueError('Custom validation failed. Stopping processing.')  
 
 #Transformations
-else:
-   df = df.withColumn('first_name', df['first_name'].cast('string'))
-   df = df.withColumn('last_name', df['last_name'].cast('string'))
-   df = df.withColumn('company_name', df['company_name'].cast('string'))
-   df = df.withColumn('address', df['address'].cast('string'))
-   df = df.withColumn('city', df['city'].cast('string'))
-   df = df.withColumn('FULLNAME', concat("first_name", "last_name"))
-df.write.mode('overwrite').format('csv').save('s3a://blue-buckets/one/')
+	else:
+		df = df.withColumn('first_name', df['first_name'].cast('string'))
+		df = df.withColumn('last_name', df['last_name'].cast('string'))
+		df = df.withColumn('company_name', df['company_name'].cast('string'))
+		df = df.withColumn('address', df['address'].cast('string'))
+		df = df.withColumn('city', df['city'].cast('string'))
+		df = df.withColumn('FULLNAME', concat("first_name", "last_name"))
+	df.write.mode('overwrite').format('csv').save('s3a://blue-buckets/one/')
+	logging.info('Data written to S3 bucket successfully')
+	logging.info('Data processing pipeline completed.')
+except Exception as e:
+	logging.error('Error occurred during data processing: {}'.format(str(e)))
+#Move custom log file to S3 bucket 
+s3 = boto3.client('s3', aws_access_key_id=access_key, aws_secret_access_key=secret_key,region_name=aws_region)
+
+# Upload custom log file to S3
+s3.upload_file('audit_logs.log', 'blue-buckets', 'logs/audit_logs.log')
+logging.info('Custom log file saved to S3 successfully.')
+# s3_glue.upload_file(key, bucket_name, key)
+logging.info('Glue log file saved to S3 successfully.')
