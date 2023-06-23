@@ -15,8 +15,9 @@ log_file_handler = logging.FileHandler('audit_logs.log')
 log_file_handler.setLevel(logging.INFO)
 log_file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s'))
 logging.getLogger('').addHandler(log_file_handler)
-try: 	
-logging.info('Starting data processing pipeline...')
+
+try:
+			logging.info('Starting data processing pipeline...')
 spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
 sc = spark.sparkContext
 
