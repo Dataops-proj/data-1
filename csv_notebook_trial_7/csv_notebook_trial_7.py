@@ -45,11 +45,11 @@ try:
 	df = df.filter(~col('last_name').isNull()).limit(100)
 
 	#Validation-custom
-	if df.filter(df['company_name'].rlike('@')):.count() > 0: 
+	if df.filter(df['company_name'].rlike('@')).count() > 0: 
 		raise ValueError('Custom validation failed. Stopping processing.')  
-	elif df.filter(df['city'].rlike('@')):.count() > 0: 
+	elif df.filter(df['city'].rlike('@')).count() > 0: 
 		raise ValueError('Custom validation failed. Stopping processing.')  
-	elif df.filter(df['address'].rlike('@')):.count() > 0: 
+	elif df.filter(df['address'].rlike('@')).count() > 0: 
 		raise ValueError('Custom validation failed. Stopping processing.')  
 
 	#Transformations
