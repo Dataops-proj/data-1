@@ -17,7 +17,7 @@ log_file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(mes
 logging.getLogger('').addHandler(log_file_handler)
 
 try:
-			logging.info('Starting data processing pipeline...')
+	logging.info('Starting data processing pipeline...')
 spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
 sc = spark.sparkContext
 
