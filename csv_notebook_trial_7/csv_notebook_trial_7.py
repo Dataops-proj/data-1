@@ -10,13 +10,13 @@ from pyspark.sql import SparkSession
 
 #Configure logging
 indian_timezone=pytz.timezone('Asia/Kolkata')
-logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s', level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S %Z', force=True) 
-
-#Create a custom log file handler
-log_file_handler = logging.FileHandler('audit_logs.log')
-log_file_handler.setLevel(logging.INFO)
-log_file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s'))
-logging.getLogger('').addHandler(log_file_handler)
+# configure the logging module to include the Indian time stamp 
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s', datefmt='%Y-%m-%d %H:%M:%S %Z')
+handler = logging.StreamHandler()
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 try:
 	logging.info('Starting data processing pipeline...')
