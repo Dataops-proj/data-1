@@ -50,7 +50,7 @@ try:
 	sc._jsc.hadoopConfiguration().set('fs.s3a.endpoint', 's3.' + aws_region + '.amazonaws.com')
 
 	#Read data from S3 bucket
-	df = spark.read.format('csv').options(header='True').load('s3://red-buckets/us-500.csv')
+	df = spark.read.format('json').options(header='True').load('s3://red-buckets/us-500.json')
 	logging.info('Data loaded from S3 bucket successfully')
 
 	#Validation-notempty
@@ -73,7 +73,7 @@ try:
 		df = df.withColumn('address', df['address'].cast('string'))
 		df = df.withColumn('city', df['city'].cast('string'))
 		df = df.withColumn('FULLNAME', concat("first_name", "last_name"))
-	df.write.mode('overwrite').format('json').save('s3a://blue-buckets/csv_to_json/')
+	df.write.mode('overwrite').format('csv').save('s3a://blue-buckets/json_to_csv/')
 	logging.info('Data written to S3 bucket successfully')
 	logging.info('Data processing pipeline completed.')
 except Exception as e:
