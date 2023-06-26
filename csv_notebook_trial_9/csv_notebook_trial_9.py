@@ -73,7 +73,7 @@ try:
 		df = df.withColumn('address', df['address'].cast('string'))
 		df = df.withColumn('city', df['city'].cast('string'))
 		df = df.withColumn('FULLNAME', concat("first_name", "last_name"))
-	df.write.mode('overwrite').format('csv').save('s3a://blue-buckets/parquet_to_csv_1/')
+	df.write.mode('overwrite').format('orc').save('s3a://blue-buckets/parquet_to_orc/')
 	logging.info('Data written to S3 bucket successfully')
 	logging.info('Data processing pipeline completed.')
 except Exception as e:
