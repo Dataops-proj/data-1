@@ -73,7 +73,7 @@ try:
 		df = df.withColumn('address', df['address'].cast('string'))
 		df = df.withColumn('city', df['city'].cast('string'))
 		df = df.withColumn('FULLNAME', concat("first_name", "last_name"))
-	df.write.mode('overwrite').format('parquet').save('s3a://blue-buckets/xcsv_to_parquet/')
+	df.write.mode('overwrite').format('parquet').save('s3a://test-repo-buckets/xcsv_to_parquet/')
 	logging.info('Data written to S3 bucket successfully')
 	logging.info('Data processing pipeline completed.')
 except Exception as e:
@@ -82,5 +82,5 @@ except Exception as e:
 s3 = boto3.client('s3', aws_access_key_id=s_s3_credentials.get('access_key'), aws_secret_access_key=s_s3_credentials.get('secret_key'),region_name=aws_region)
 
 # Upload custom log file to S3
-s3.upload_file('audit_logs.log', 'blue-buckets', 'logs/audit_logs.log')
+s3.upload_file('audit_logs.log', 'test-repo-buckets', 'logs/audit_logs.log')
 logging.info('Custom log file saved to S3 successfully.')
