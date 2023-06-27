@@ -1,0 +1,31 @@
+{
+  "name": "csv_notebook_11",
+  "role": "arn:aws:iam::962050899073:role/Glue_vault123",
+  "executionProperty": {
+    "maxConcurrentRuns": 1
+  },
+  "command": {
+    "name": "glueetl",
+    "scriptLocation": "s3://red-buckets/csv_notebook_11.py",
+    "pythonVersion": "3"
+  },
+  "defaultArguments": {
+    "--job-bookmark-option": "job-bookmark-disable",
+    "--job-language": "python",
+    "--additional-python-modules": "datetime==5.1,hvac==1.1.1,pyspark==3.4.1"
+  },
+  "maxRetries": 0,
+  "allocatedCapacity": "",
+  "timeout": 2880,
+  "maxCapacity": 2.0,
+  "maxConcurrentRuns": 3,
+  "glueVersion": "3.0",
+  "numberOfWorkers": 2,
+  "workerType": "G.1X",
+  "sourceControlDetails": {
+    "provider": "GITHUB",
+    "repository": "data-1",
+    "branch": "main",
+    "folder": "csv_notebook_11"
+  }
+}
