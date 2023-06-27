@@ -13,7 +13,7 @@ indian_timezone=pytz.timezone('Asia/Kolkata')
 # configure the logging module to include the Indian time stamp 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s', datefmt='%Y-%m-%d %H:%M:%S %Z')
+formatter = logging.Formatter('%(asctime)s, %(levelname)s, %(message)s', datefmt='%Y-%m-%d %H:%M:%S %Z')
 #Time_converter_function
 def converter(timestamp):
 	utc_time = datetime.utcfromtimestamp(timestamp)
@@ -25,7 +25,7 @@ handler = logging.StreamHandler()
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 #logging_file
-file_handler = logging.FileHandler('audit_logs.log')
+file_handler = logging.FileHandler('audit_logs.csv')
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
@@ -82,5 +82,5 @@ except Exception as e:
 s3 = boto3.client('s3', aws_access_key_id=s_s3_credentials.get('access_key'), aws_secret_access_key=s_s3_credentials.get('secret_key'),region_name=aws_region)
 
 # Upload custom log file to S3
-s3.upload_file('audit_logs.log', 'blue-buckets', 'logs/audit_logs.log')
+s3.upload_file('audit_logs.csv', 'blue-buckets', 'logs/audit_logs.csv')
 logging.info('Custom log file saved to S3 successfully.')
