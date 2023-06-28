@@ -27,5 +27,7 @@
     "repository": "data-1",
     "branch": "main",
     "folder": "csv_notebook_11"
-  }
+  },
+  "AllocatedCapacity": 0,
+  "Schedule": "cron(0 0 * * ? *)"
 }
