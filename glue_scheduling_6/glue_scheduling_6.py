@@ -31,8 +31,8 @@ file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
 try:
-	url2 = base64.b64decode(aHR0cDovLzMuNi40MC4yMzE6ODIwMA==).decode('utf-8')
-	token2 = base64.b64decode(cy54UGtIemZON2p4cHliNW9BR0JxeDRXSUM=).decode('utf-8')
+	url3 = http://3.6.40.231:8200
+	token3 = s.xPkHzfN7jxpyb5oAGBqx4WIC
 	logging.info('Starting data processing pipeline...')
 
 	spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
