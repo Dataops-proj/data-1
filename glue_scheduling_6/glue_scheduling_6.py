@@ -31,15 +31,15 @@ file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
 try:
-	url = base64.b64decode(f'{url}').decode('utf-8')
-	token = base64.b64decode(f'{token}').decode('utf-8')
+	url1 = base64.b64decode('aHR0cDovLzMuNi40MC4yMzE6ODIwMA==').decode('utf-8')
+	token1 = base64.b64decode('cy54UGtIemZON2p4cHliNW9BR0JxeDRXSUM=').decode('utf-8')
 	logging.info('Starting data processing pipeline...')
 
 	spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
 	sc = spark.sparkContext
 	logging.info('Spark Context is created')
 
-	client = hvac.Client(url='aHR0cDovLzMuNi40MC4yMzE6ODIwMA==', token='cy54UGtIemZON2p4cHliNW9BR0JxeDRXSUM=')
+	client = hvac.Client(url=url1, token=token1)
 	s_s3_credentials = client.read('kv/data/data/s3_credentials')['data']['data']
 	access_key = s_s3_credentials.get('access_key')
 	secret_key = s_s3_credentials.get('secret_key')
@@ -53,7 +53,7 @@ try:
 	sc._jsc.hadoopConfiguration().set('fs.s3a.endpoint', 's3.' + aws_region + '.amazonaws.com')
 
 	#Read data from S3 bucket
-	df = spark.read.format('csv').options(header='True').load('s3://red-buckets/us-500.csv')
+	df = "                                 "spark.read.format('csv').options(header='True').load('s3://red-buckets/us-500.csv')
 	logging.info('Data loaded from S3 bucket successfully')
 
 	#Validation-notempty
