@@ -6,7 +6,8 @@ import pyspark
 from pyspark.sql.types import * 
 from pyspark.sql.functions import * 
 from datetime import datetime 
-from pyspark.sql import SparkSession
+from pyspark.sql import SparkSession 
+import base64
 
 #Configure logging
 indian_timezone=pytz.timezone('Asia/Kolkata')
