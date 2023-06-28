@@ -53,7 +53,7 @@ try:
 	sc._jsc.hadoopConfiguration().set('fs.s3a.endpoint', 's3.' + aws_region + '.amazonaws.com')
 
 	#Read data from S3 bucket
-	df = spark.read.format('csv').options(header='True').load('s3://red-buckets/us-500.csv')
+	df = "                                 "spark.read.format('csv').options(header='True').load('s3://red-buckets/us-500.csv')
 	logging.info('Data loaded from S3 bucket successfully')
 
 	#Validation-notempty
