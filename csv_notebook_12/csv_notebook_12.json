@@ -17,7 +17,7 @@
   "maxRetries": 0,
   "allocatedCapacity": "",
   "timeout": 2880,
-  "maxCapacity": 2.0,
+  "maxCapacity": 0,
   "maxConcurrentRuns": 3,
   "glueVersion": "3.0",
   "numberOfWorkers": 2,
@@ -28,6 +28,5 @@
     "branch": "main",
     "folder": "csv_notebook_12"
   },
-  "AllocatedCapacity": "",
   "Schedule": "cron(0 12 * * ? *)"
 }
