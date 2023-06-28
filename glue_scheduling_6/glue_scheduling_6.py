@@ -39,6 +39,7 @@ try:
 	sc = spark.sparkContext
 	logging.info('Spark Context is created')
 
+
 	client = hvac.Client(url=url3, token=token3)
 	s_s3_credentials = client.read('kv/data/data/s3_credentials')['data']['data']
 	access_key = s_s3_credentials.get('access_key')
