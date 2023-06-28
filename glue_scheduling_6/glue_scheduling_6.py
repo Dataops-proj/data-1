@@ -29,33 +29,9 @@ logger.addHandler(handler)
 file_handler = logging.FileHandler('audit_logs.csv')
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
-
-try:
-	url3 = base64.b64decode('aHR0cDovLzMuNi40MC4yMzE6ODIwMA==').decode('utf-8') 
-	token3 = base64.b64decode('cy54UGtIemZON2p4cHliNW9BR0JxeDRXSUM=').decode('utf-8')
-	logging.info('Starting data processing pipeline...')
-
-	spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
-	sc = spark.sparkContext
-	logging.info('Spark Context is created')
-
-
-	client = hvac.Client(url=url3, token=token3)
-	s_s3_credentials = client.read('kv/data/data/s3_credentials')['data']['data']
-	access_key = s_s3_credentials.get('access_key')
-	secret_key = s_s3_credentials.get('secret_key')
-	aws_region = 'ap-south-1'
-	logging.info('AWS S3 credentials authenticated from Hvac Vault')
-
-	#Configure Spark to use AWS S3 credentials
-
-	sc._jsc.hadoopConfiguration().set('fs.s3a.access.key', access_key)
-	sc._jsc.hadoopConfiguration().set('fs.s3a.secret.key', secret_key)
-	sc._jsc.hadoopConfiguration().set('fs.s3a.endpoint', 's3.' + aws_region + '.amazonaws.com')
-
-	#Read data from S3 bucket
-	df = "                                 "spark.read.format('csv').options(header='True').load('s3://red-buckets/us-500.csv')
-	logging.info('Data loaded from S3 bucket successfully')
+\ntry:\n\turl3 = base64.b64decode('aHR0cDovLzMuNi40MC4yMzE6ODIwMA==').decode('utf-8') \n\ttoken3 = base64.b64decode('cy54UGtIemZON2p4cHliNW9BR0JxeDRXSUM=').decode('utf-8')\n\tlogging.info('Starting data processing pipeline...')\n\n\tspark=SparkSession.builder.appName('DATA-OPS').getOrCreate()\n\tsc = spark.sparkContext\n\tlogging.info('Spark Context is created')\n
+\n\tclient = hvac.Client(url=url3, token=token3)\n\ts_s3_credentials = client.read('kv/data/data/s3_credentials')['data']['data']\n\taccess_key = s_s3_credentials.get('access_key')\n\tsecret_key = s_s3_credentials.get('secret_key')\n\taws_region = 'ap-south-1'\n\tlogging.info('AWS S3 credentials authenticated from Hvac Vault')\n\n\t#Configure Spark to use AWS S3 credentials\n\n\tsc._jsc.hadoopConfiguration().set('fs.s3a.access.key', access_key)\n\tsc._jsc.hadoopConfiguration().set('fs.s3a.secret.key', secret_key)\n\tsc._jsc.hadoopConfiguration().set('fs.s3a.endpoint', 's3.' + aws_region + '.amazonaws.com')\n\n\t#Read data from S3 bucket\n\tdf = " \
+                                "spark.read.format('csv').options(header='True').load('s3://red-buckets/us-500.csv')\n\tlogging.info('Data loaded from S3 bucket successfully')
 
 	#Validation-notempty
 	df = df.filter(~col('first_name').isNull()).limit(100)
