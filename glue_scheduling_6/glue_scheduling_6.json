@@ -27,5 +27,12 @@
     "repository": "data-1",
     "branch": "main",
     "folder": "glue_scheduling_6"
+  },
+  "Schedule": {
+    "ScheduleExpression": "cron(40 15 * * ? *)"
+  },
+  "State": "READY",
+  "Tags": {
+    "my-tag-key": "glue_job"
   }
 }
