@@ -28,5 +28,14 @@
     "branch": "main",
     "folder": "glue_schedule_test2"
   },
-  "Schedule": "cron(0 12 * * ? *)"
+  "glue_schedule": {
+    "Name": "my-schedule",
+    "Description": "DATAOPS",
+    "Schedule": "cron(0 12 * * ? *)",
+    "Actions": [
+      {
+        "JobName": "glue_schedule_test2"
+      }
+    ]
+  }
 }
