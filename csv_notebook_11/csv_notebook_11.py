@@ -73,6 +73,7 @@ try:
 		df = df.withColumn('address', df['address'].cast('string'))
 		df = df.withColumn('city', df['city'].cast('string'))
 		df = df.withColumn('FULLNAME', concat("first_name", "last_name"))
+	 Data Transformation completed successfully
 	df.write.mode('overwrite').format('parquet').save('s3a://blue-buckets/CSV_to_Parquet_demo/')
 	logging.info('Data written to S3 bucket successfully')
 	logging.info('Data processing pipeline completed.')
