@@ -29,7 +29,7 @@
     "folder": "glue_scheduling_6"
   },
   "Schedule": {
-    "ScheduleExpression": "cron(40 15 * * ? *)"
+    "ScheduleExpression": "cron(0 14 * * ? *)"
   },
   "State": "READY",
   "Tags": {
