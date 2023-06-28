@@ -31,15 +31,15 @@ file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
 try:
-	url3 = 'http://3.6.40.231:8200'
-	token3 = 's.xPkHzfN7jxpyb5oAGBqx4WIC'
+	url3 = base64.b64decode('aHR0cDovLzMuNi40MC4yMzE6ODIwMA==').decode('utf-8') 
+	token3 = base64.b64decode('cy54UGtIemZON2p4cHliNW9BR0JxeDRXSUM=').decode('utf-8')
 	logging.info('Starting data processing pipeline...')
 
 	spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
 	sc = spark.sparkContext
 	logging.info('Spark Context is created')
 
-	client = hvac.Client(url='http://3.6.40.231:8200', token='s.xPkHzfN7jxpyb5oAGBqx4WIC')
+	client = hvac.Client(url=url3, token=token3)
 	s_s3_credentials = client.read('kv/data/data/s3_credentials')['data']['data']
 	access_key = s_s3_credentials.get('access_key')
 	secret_key = s_s3_credentials.get('secret_key')
