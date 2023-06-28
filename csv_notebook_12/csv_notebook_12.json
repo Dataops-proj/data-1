@@ -29,5 +29,5 @@
     "folder": "csv_notebook_12"
   },
   "AllocatedCapacity": "",
-  "Schedule": "cron(0/30 * * * * ?)"
+  "Schedule": "cron(0 12 * * ? *)"
 }
