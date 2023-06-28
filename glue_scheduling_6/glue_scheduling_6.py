@@ -31,8 +31,8 @@ file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
 try:
-	url3 = http://3.6.40.231:8200
-	token3 = s.xPkHzfN7jxpyb5oAGBqx4WIC
+	url3 = 'http://3.6.40.231:8200'
+	token3 = 's.xPkHzfN7jxpyb5oAGBqx4WIC'
 	logging.info('Starting data processing pipeline...')
 
 	spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
@@ -53,7 +53,7 @@ try:
 	sc._jsc.hadoopConfiguration().set('fs.s3a.endpoint', 's3.' + aws_region + '.amazonaws.com')
 
 	#Read data from S3 bucket
-	df = "                                 "spark.read.format('csv').options(header='True').load('s3://red-buckets/us-500.csv')
+	df = spark.read.format('csv').options(header='True').load('s3://red-buckets/us-500.csv')
 	logging.info('Data loaded from S3 bucket successfully')
 
 	#Validation-notempty
