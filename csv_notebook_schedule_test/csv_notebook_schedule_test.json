@@ -27,12 +27,5 @@
     "repository": "data-1",
     "branch": "main",
     "folder": "csv_notebook_schedule_test"
-  },
-  "Schedule": {
-    "ScheduleExpression": "cron(0 12 * * ? *)"
-  },
-  "State": "READY",
-  "Tags": {
-    "my-tag-key": "glue_job"
   }
 }
