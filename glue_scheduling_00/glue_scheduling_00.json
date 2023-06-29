@@ -1,12 +1,12 @@
 {
   "name": "glue_scheduling_00",
-  "role": "arn:aws:iam::962050899073:role/Glue_vault123",
+  "role": "arn:aws:iam::919490798061:role/Glue_vault_policy",
   "executionProperty": {
     "maxConcurrentRuns": 1
   },
   "command": {
     "name": "glueetl",
-    "scriptLocation": "s3://red-buckets/glue_scheduling_00.py",
+    "scriptLocation": "s3://ag-nandha/glue_scheduling_00.py",
     "pythonVersion": "3"
   },
   "defaultArguments": {
