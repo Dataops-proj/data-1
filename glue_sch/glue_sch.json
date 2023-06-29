@@ -15,7 +15,7 @@
     "--additional-python-modules": "datetime==5.1,hvac==1.1.1,pyspark==3.4.1"
   },
   "maxRetries": 0,
-  "allocatedCapacity": "2",
+  "allocatedCapacity": 2,
   "timeout": 2880,
   "maxCapacity": 2,
   "maxConcurrentRuns": 3,
