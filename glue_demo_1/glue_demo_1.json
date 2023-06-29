@@ -16,7 +16,7 @@
   },
   "maxRetries": 0,
   "timeout": 2880,
-  "maxCapacity": 2,
+  "maxCapacity": "",
   "maxConcurrentRuns": 3,
   "glueVersion": "3.0",
   "numberOfWorkers": 2,
