@@ -14,7 +14,7 @@ indian_timezone=pytz.timezone('Asia/Kolkata')
 # configure the logging module to include the Indian time stamp 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s, %(levelname)s, %(message)s', datefmt='%Y-%m-%d %H:%M:%S %Z')
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s', datefmt='%Y-%m-%d %H:%M:%S %Z')
 #Time_converter_function
 def converter(timestamp):
 	utc_time = datetime.utcfromtimestamp(timestamp)
@@ -26,7 +26,7 @@ handler = logging.StreamHandler()
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 #logging_file
-file_handler = logging.FileHandler('audit_logs.csv')
+file_handler = logging.FileHandler('audit_logs.log')
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
@@ -77,8 +77,7 @@ try:
 		df = df.withColumn('address', df['address'].cast('string'))
 		df = df.withColumn('city', df['city'].cast('string'))
 		df = df.withColumn('FULLNAME', concat("first_name", "last_name"))
-	logging.info('Data Transformation completed successfully')
-	df.write.mode('overwrite').format('parquet').save('s3a://blue-buckets/CSV_to_Parquet_demo/')
+	df.write.mode('overwrite').format('parquet').save('s3a://test-repo-buckets/xcsv_to_parquet/')
 	logging.info('Data written to S3 bucket successfully')
 	logging.info('Data processing pipeline completed.')
 except Exception as e:
@@ -87,5 +86,5 @@ except Exception as e:
 s3 = boto3.client('s3', aws_access_key_id=s_s3_credentials.get('access_key'), aws_secret_access_key=s_s3_credentials.get('secret_key'),region_name=aws_region)
 
 # Upload custom log file to S3
-s3.upload_file('audit_logs.csv', 'blue-buckets', 'logs/audit_logs.csv')
+s3.upload_file('audit_logs.csv', 'test-repo-buckets', 'logs/audit_logs.csv')
 logging.info('Custom log file saved to S3 successfully.')
