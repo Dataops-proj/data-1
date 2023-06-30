@@ -19,7 +19,7 @@
   "maxCapacity": "",
   "maxConcurrentRuns": 3,
   "glueVersion": "3.0",
-  "numberOfWorkers": 2,
+  "numberOfWorkers": 10,
   "workerType": "G.1X",
   "sourceControlDetails": {
     "provider": "GITHUB",
