@@ -2,7 +2,7 @@
   "name": "dataops_demo_1",
   "role": "arn:aws:iam::962050899073:role/Glue_vault123",
   "executionProperty": {
-    "maxConcurrentRuns": 1
+    "maxConcurrentRuns": 3
   },
   "command": {
     "name": "glueetl",
@@ -17,7 +17,6 @@
   "maxRetries": 0,
   "timeout": 2880,
   "maxCapacity": "",
-  "maxConcurrentRuns": 4,
   "glueVersion": "3.0",
   "numberOfWorkers": 10,
   "workerType": "G.1X",
