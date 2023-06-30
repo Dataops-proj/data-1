@@ -33,8 +33,7 @@ logger.addHandler(file_handler)
 with open('audit_logs.csv', 'r+') as f:
 	content = f.read()
 	f.seek(0, 0)
-	f.write('TimeStamp, Log_level, Log_Message
-' + content)
+	f.write('TimeStamp, Log_level, Log_Message' + content)
 
 try:
 	logging.info('Starting data processing pipeline...')
