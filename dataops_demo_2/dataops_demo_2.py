@@ -41,7 +41,7 @@ try:
 	sc = spark.sparkContext
 	logging.info('Spark Context is created')
 
-	url_dcp = base64.b64decode('None').decode('utf-8')
+	url_dcp = base64.b64decode('aHR0cDovLzMuNi40MC4yMzE6ODIwMA==').decode('utf-8')
 	token_dcp = base64.b64decode('None').decode('utf-8')
 
 	client = hvac.Client(url=url_dcp, token=token_dcp)
