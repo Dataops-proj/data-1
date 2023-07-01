@@ -41,14 +41,14 @@ try:
 	sc = spark.sparkContext
 	logging.info('Spark Context is created')
 
-	url_dcp = base64.b64decode('None').decode('utf-8')
-	token_dcp = base64.b64decode('None').decode('utf-8')
+	url_dcp = base64.b64decode('aHR0cDovLzMuNi40MC4yMzE6ODIwMA==').decode('utf-8')
+	token_dcp = base64.b64decode('cy54UGtIemZON2p4cHliNW9BR0JxeDRXSUM=').decode('utf-8')
 
 	client = hvac.Client(url=url_dcp, token=token_dcp)
 	s_s3_credentials = client.read('kv/data/data/s3_credentials')['data']['data']
 	access_key = s_s3_credentials.get('access_key')
 	secret_key = s_s3_credentials.get('secret_key')
-	aws_region = 'None'
+	aws_region = 'ap-south-1'
 	logging.info('AWS S3 credentials authenticated from Hvac Vault')
 
 	#Configure Spark to use AWS S3 credentials
@@ -58,7 +58,7 @@ try:
 	sc._jsc.hadoopConfiguration().set('fs.s3a.endpoint', 's3.' + aws_region + '.amazonaws.com')
 
 	#Read data from S3 bucket
-	df = spark.read.format('csv').options(header='True').load('s3://None/us-500.csv')
+	df = spark.read.format('csv').options(header='True').load('s3://red-buckets/us-500.csv')
 	logging.info('The file us-500.csv loaded from S3 bucket successfully')
 
 	#Get the number of rows
