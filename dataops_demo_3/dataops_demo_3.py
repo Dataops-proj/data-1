@@ -100,7 +100,7 @@ try:
 except Exception as e:
 	logging.error('Error occurred during data processing: {}'.format(str(e)))
 #Move custom log file to S3 bucket 
-s3 = boto3.client('s3', aws_access_key_id = s_s3_credentials.get('access_key'), aws_secret_access_key = s_s3_credentials.get('secret_key'), region_name = aws_region)
+s3 = boto3.client('s3', aws_access_key_id=s_s3_credentials.get('access_key'), aws_secret_access_key=s_s3_credentials.get('secret_key'), region_name=aws_region)
 
 # Upload custom log file to S3
 s3.upload_file('audit_logs.csv', 'blue-buckets', 'logs/audit_logs.csv')
