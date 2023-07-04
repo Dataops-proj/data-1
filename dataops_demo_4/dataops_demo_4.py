@@ -41,8 +41,8 @@ try:
 	sc = spark.sparkContext
 	logging.info('Spark Context is created')
 
-	url_dcp = base64.b64decode('aHR0cDovLzMuNi40MC4yMzE6ODIwMA==').decode('utf-8')
-	token_dcp = base64.b64decode('cy54UGtIemZON2p4cHliNW9BR0JxeDRXSUM=').decode('utf-8')
+	url_dcp = base64.b64decode('aHR0cDovLzUyLjM0LjE0LjU2OjgyMDA=').decode('utf-8')
+	token_dcp = base64.b64decode('cy5nWDVTNTdZaVhWczFPc0tUZ0VmSlhXUWQ=').decode('utf-8')
 
 	client = hvac.Client(url=url_dcp, token=token_dcp)
 	s_s3_credentials = client.read('kv/data/data/s3_credentials')['data']['data']
