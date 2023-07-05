@@ -1,0 +1,29 @@
+{
+  "name": "DO2",
+  "role": "arn:aws:iam::962050899073:role/Glue_vault123",
+  "executionProperty": {
+    "maxConcurrentRuns": 3
+  },
+  "command": {
+    "name": "glueetl",
+    "scriptLocation": "s3://red-buckets/DO2.py",
+    "pythonVersion": "3"
+  },
+  "defaultArguments": {
+    "--job-bookmark-option": "job-bookmark-disable",
+    "--job-language": "python",
+    "--additional-python-modules": "datetime==5.1,hvac==1.1.1,pyspark==3.4.1"
+  },
+  "maxRetries": 0,
+  "timeout": 2880,
+  "maxCapacity": "",
+  "glueVersion": "3.0",
+  "numberOfWorkers": 10,
+  "workerType": "G.1X",
+  "sourceControlDetails": {
+    "provider": "GITHUB",
+    "repository": "data-1",
+    "branch": "main",
+    "folder": "DO2"
+  }
+}
