@@ -46,8 +46,8 @@ try:
 
 	client = hvac.Client(url=url_dcp, token=token_dcp)
 	s_s3_credentials = client.read('kv/data/data/S3_credentials')['data']['data']
-	access_key = s_s3_credentials.get('access_key')
-	secret_key = s_s3_credentials.get('secret_key')
+	access_key = s_s3_credentials.get('aws_access_key_id')
+	secret_key = s_s3_credentials.get('aws_secret_access_key')
 	aws_region = 'ap-south-1'
 	logging.info('AWS S3 credentials authenticated from Hvac Vault')
 
