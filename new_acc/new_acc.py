@@ -37,6 +37,15 @@ with open("audit_logs.csv", "r+") as f:
 try:
 	spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
 	sc = spark.sparkContext
+	url_dcp = base64.b64decode('{}').decode('utf-8')
+	token_dcp = base64.b64decode('{}').decode('utf-8')
+
+	client = hvac.Client(url=url_dcp, token=token_dcp)
+	s_s3_credentials = client.read('kv/data/data/S3_credentials')['data']['data']
+	access_key = s_s3_credentials.get('aws_access_key_id')
+	secret_key = s_s3_credentials.get('aws_secret_access_key')
+	aws_region = '{}'
+	logging.info('AWS S3 credentials authenticated from Hvac Vault')
 	df = spark.read.jdbc(url='jdbc:postgresql://database-1.crlupmqhrzfz.ap-south-1.rds.amazonaws.com:5432/postgres.public', table='(SELECT * FROM us_500 ) as us_500', properties={'user': 'postgres', 'password': '12341234'})
 
 	#Validation-notempty
