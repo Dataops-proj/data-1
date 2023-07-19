@@ -67,3 +67,13 @@ try:
 
 	logging.info('Data written to RDS successfully')
 	logging.info('Data processing pipeline completed.')
+
+	#Move custom log file to S3 bucket 
+	s3 = boto3.client('s3', aws_access_key_id= access_key, aws_secret_access_key= secret_key,region_name=aws_region)
+
+	# Upload custom log file to S3
+	s3.upload_file('audit_logs.csv', 'dataops-source-bucket', 'logs/audit_logs.csv')
+	logging.info('Custom log file saved to S3 successfully.')
+
+except Exception as e:
+	logging.error('Error occurred during data processing: {}'.format(str(e)))
