@@ -1,6 +1,6 @@
 import hvac 
-import boto3 
 import pytz 
+import boto3 
 import logging 
 import pyspark 
 from pyspark.sql.types import * 
@@ -35,39 +35,9 @@ with open("audit_logs.csv", "r+") as f:
 	f.seek(0, 0)
 	f.write("TimeStamp, Log_level, Log_Message\n" + content)
 try:
-	logging.info('Starting data processing pipeline...')
-
 	spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
 	sc = spark.sparkContext
-	logging.info('Spark Context is created')
-
-	url_dcp = base64.b64decode('aHR0cDovLzU0LjE4NC43Ny4xNDY6ODIwMA==').decode('utf-8')
-	token_dcp = base64.b64decode('cy5WbkNERVNOc1d3S25JQkF0T1JHNmJKaUQ=').decode('utf-8')
-
-	client = hvac.Client(url=url_dcp, token=token_dcp)
-	s_s3_credentials = client.read('kv/data/data/S3_credentials')['data']['data']
-	access_key = s_s3_credentials.get('aws_access_key_id')
-	secret_key = s_s3_credentials.get('aws_secret_access_key')
-	aws_region = 'ap-south-1'
-	logging.info('AWS S3 credentials authenticated from Hvac Vault')
-
-	#Configure Spark to use AWS S3 credentials
-
-	sc._jsc.hadoopConfiguration().set('fs.s3a.access.key', access_key)
-	sc._jsc.hadoopConfiguration().set('fs.s3a.secret.key', secret_key)
-	sc._jsc.hadoopConfiguration().set('fs.s3a.endpoint', 's3.' + aws_region + '.amazonaws.com')
-
-	#Read data from S3 bucket
-	df = spark.read.format('csv').options(header='True').load('s3://dataops-source-bucket/us-500.csv')
-	logging.info('The file us-500.csv loaded from S3 bucket successfully')
-
-	#Get the number of rows
-	num_rows = df.count()
-	logging.info(f'Number of rows in the file: {num_rows}')
-
-	# Get the number of columns
-	num_cols = len(df.schema.fields)
-	logging.info(f'Number of columns in the file: {num_cols}')
+	df = spark.read.jdbc(url='jdbc:postgresql://database-1.crlupmqhrzfz.ap-south-1.rds.amazonaws.com:5432/postgres.public', table='(SELECT * FROM us_500 ) as us_500', properties={'user': 'postgres', 'password': '12341234'})
 
 	#Validation-notempty
 	df = df.filter(~col('first_name').isNull()).limit(100)
@@ -92,18 +62,8 @@ try:
 
 	logging.info('Data Transformation completed successfully')
 
-	#writing the dataframe to s3 bucket
-	df.write.mode('overwrite').format('parquet').save('s3a://dataops-target-bucket/ritesh/')
+	#writing the dataframe to RDS 
+	df.write.jdbc(url='jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres.public', table='us1', mode='overwrite', properties={'user': 'postgres', 'password': 'Dataops123'})
 
-	logging.info('Data written to S3 bucket successfully')
+	logging.info('Data written to RDS successfully')
 	logging.info('Data processing pipeline completed.')
-
-	#Move custom log file to S3 bucket 
-	s3 = boto3.client('s3', aws_access_key_id= access_key, aws_secret_access_key= secret_key,region_name=aws_region)
-
-	# Upload custom log file to S3
-	s3.upload_file('audit_logs.csv', 'dataops-target-bucket', 'logs/audit_logs.csv')
-	logging.info('Custom log file saved to S3 successfully.')
-
-except Exception as e:
-	logging.error('Error occurred during data processing: {}'.format(str(e)))
