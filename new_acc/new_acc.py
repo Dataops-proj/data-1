@@ -37,7 +37,7 @@ with open("audit_logs.csv", "r+") as f:
 try:
 	logging.info('Starting data processing pipeline...')
 
-	spark=SparkSession.builder.config("spark.jars.packages", "org.postgresql:postgresql:42.6.0").appName('DATA-OPS').getOrCreate()
+	spark=SparkSession.builder.appName('DATA-OPS').config("spark.jars.packages", "org.postgresql:postgresql:42.6.0").getOrCreate()
 	sc = spark.sparkContext
 	logging.info('Spark Context is created')
 
