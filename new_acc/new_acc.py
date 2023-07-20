@@ -35,18 +35,24 @@ with open("audit_logs.csv", "r+") as f:
 	f.seek(0, 0)
 	f.write("TimeStamp, Log_level, Log_Message\n" + content)
 try:
-	spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
+	logging.info('Starting data processing pipeline...')
+
+	spark=SparkSession.builder.config("spark.jars.packages", "org.postgresql:postgresql:42.6.0").appName('DATA-OPS').getOrCreate()
 	sc = spark.sparkContext
+	logging.info('Spark Context is created')
+
 	url_dcp = base64.b64decode('aHR0cDovLzU0LjE4NC43Ny4xNDY6ODIwMA==').decode('utf-8')
 	token_dcp = base64.b64decode('cy5WbkNERVNOc1d3S25JQkF0T1JHNmJKaUQ=').decode('utf-8')
 
 	client = hvac.Client(url=url_dcp, token=token_dcp)
 	s_s3_credentials = client.read('kv/data/data/S3_credentials')['data']['data']
+	database_cred = client.read('kv/data/data/s_database')['data']['data']
+	username = database_cred.get('username')
+	password = database_cred.get('password')
 	access_key = s_s3_credentials.get('aws_access_key_id')
 	secret_key = s_s3_credentials.get('aws_secret_access_key')
 	aws_region = 'ap-south-1'
-	logging.info('AWS S3 credentials authenticated from Hvac Vault')
-	df = spark.read.jdbc(url='jdbc:postgresql://database-1.crlupmqhrzfz.ap-south-1.rds.amazonaws.com:5432/postgres.public', table='(SELECT * FROM us_500 ) as us_500', properties={'user': 'postgres', 'password': '12341234'})
+	logging.info('AWS S3 credentials and database authenticated from Hvac Vault')df = spark.read.format('jdbc').option('url', jdbc:postgresql://database-1.crlupmqhrzfz.ap-south-1.rds.amazonaws.com:5432/postgres.public).option('query', (SELECT * FROM us_500 ) as us_500).option('user', postgres).option('password', 12341234).option('driver', 'org.postgresql.Driver').load()
 
 	#Validation-notempty
 	df = df.filter(~col('first_name').isNull()).limit(100)
