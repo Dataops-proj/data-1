@@ -46,13 +46,17 @@ try:
 
 	client = hvac.Client(url=url_dcp, token=token_dcp)
 	s_s3_credentials = client.read('kv/data/data/S3_credentials')['data']['data']
-	database_cred = client.read('kv/data/data/s_database')['data']['data']
-	username = database_cred.get('username')
-	password = database_cred.get('password')
+	database_cred_s = client.read('kv/data/data/s_database')['data']['data']
+	database_cred_t = client.read('kv/data/data/t_database')['data']['data']
+	username_s = database_cred_s.get('username')
+	password_s = database_cred_s.get('password')
+	username_t = database_cred_t.get('username')
+	password_t = database_cred_t.get('password')
 	access_key = s_s3_credentials.get('aws_access_key_id')
 	secret_key = s_s3_credentials.get('aws_secret_access_key')
 	aws_region = 'ap-south-1'
-	logging.info('AWS S3 credentials and database authenticated from Hvac Vault')df = spark.read.format('jdbc').option('url', jdbc:postgresql://database-1.crlupmqhrzfz.ap-south-1.rds.amazonaws.com:5432/postgres.public).option('query', (SELECT * FROM us_500 ) as us_500).option('user', postgres).option('password', 12341234).option('driver', 'org.postgresql.Driver').load()
+	logging.info('AWS S3 credentials and database authenticated from Hvac Vault')
+	df = spark.read.format('jdbc').option('url','jdbc:postgresql://database-1.crlupmqhrzfz.ap-south-1.rds.amazonaws.com:5432/postgres.public').option('query', '(SELECT * FROM us_500 ) as us_500').option('user', username_s).option('password', password_s).option('driver', 'org.postgresql.Driver').load()
 
 	#Validation-notempty
 	df = df.filter(~col('first_name').isNull()).limit(100)
