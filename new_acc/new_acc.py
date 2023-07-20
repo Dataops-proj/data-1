@@ -78,6 +78,7 @@ try:
 		df = df.withColumn('address', df['address'].cast('string'))
 		df = df.withColumn('city', df['city'].cast('string'))
 		df = df.withColumn('FULLNAME', concat("first_name", "last_name"))
+df.write.format('jdbc').mode(overwrite).option('url', jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres.public).option('dbtable', us1).option('user', username_t).option('password', password_t).save()
 
 	logging.info('Data Transformation completed successfully')
 
