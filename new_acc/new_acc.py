@@ -56,7 +56,7 @@ try:
 	secret_key = s_s3_credentials.get('aws_secret_access_key')
 	aws_region = 'ap-south-1'
 	logging.info('AWS S3 credentials and database authenticated from Hvac Vault')
-	df = spark.read.format('jdbc').option('url','jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('query', '(SELECT * FROM us_500 ) as us_500').option('user', username_s).option('password', password_s).option('driver', 'org.postgresql.Driver').load()
+	df = spark.read.format('jdbc').option('url', 'jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('query', '(SELECT * FROM us)').option('user', 'username_s').option('password', 'password_s').option('driver', 'org.postgresql.Driver').load()
 
 	#Validation-notempty
 	df = df.filter(~col('first_name').isNull()).limit(100)
@@ -82,7 +82,7 @@ try:
 	logging.info('Data Transformation completed successfully')
 
 	#writing the dataframe to RDS 
-	df.write.format('jdbc').mode('overwrite').option('url', 'jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('dbtable', 'us99').option('user', username_t).option('password', password_t).save()
+	df.write.format('jdbc').mode('overwrite').option('url', 'jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('query', ' ').option('user', 'username_t').option('password', 'password_t').save()
 
 	logging.info('Data written to RDS successfully')
 	logging.info('Data processing pipeline completed.')
