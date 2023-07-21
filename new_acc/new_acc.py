@@ -82,7 +82,7 @@ try:
 	logging.info('Data Transformation completed successfully')
 
 	#writing the dataframe to RDS 
-	df.write.format('jdbc').mode('overwrite').option('url', 'jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('query', ' ').option('user', 'username_t').option('password', 'password_t').save()
+	df.write.format('jdbc').mode('overwrite').option('url', 'jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('query', '(SELECT * FROM us99)').option('user', username_t).option('password', password_t).save()
 
 	logging.info('Data written to RDS successfully')
 	logging.info('Data processing pipeline completed.')
