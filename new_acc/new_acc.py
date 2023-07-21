@@ -55,7 +55,9 @@ try:
 	access_key = s_s3_credentials.get('aws_access_key_id')
 	secret_key = s_s3_credentials.get('aws_secret_access_key')
 	aws_region = 'ap-south-1'
+
 	logging.info('AWS S3 credentials and database authenticated from Hvac Vault')
+
 	df = spark.read.format('jdbc').option('url', 'jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('driver', 'org.postgresql.Driver').option('dbtable', 'us').option('user', 'username_s').option('password', 'password_s').load()
 
 	#Validation-notempty
