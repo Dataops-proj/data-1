@@ -83,22 +83,17 @@ try:
 
 	logging.info('Data Transformation completed successfully')
 
-	sc = spark.sparkContext
-	sc._jsc.hadoopConfiguration().set('fs.s3a.access.key', access_key)
-	sc._jsc.hadoopConfiguration().set('fs.s3a.secret.key', secret_key)
-	sc._jsc.hadoopConfiguration().set('fs.s3a.endpoint', 's3.' + aws_region + '.amazonaws.com')
+	#writing the dataframe to RDS 
+	df.write.format('jdbc').mode('overwrite').option('url', 'jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('driver', 'org.postgresql.Driver').option('dbtable', 'dbTOs3').option('user', 'username_t').option('password', 'password_t').save()
 
-	#writing the dataframe to s3 bucket
-	df.write.mode('overwrite').format('parquet').save('s3a://dataops-target-bucket/ritesh/')
-
-	logging.info('Data written to S3 bucket successfully')
+	logging.info('Data written to RDS successfully')
 	logging.info('Data processing pipeline completed.')
 
 	#Move custom log file to S3 bucket 
 	s3 = boto3.client('s3', aws_access_key_id= access_key, aws_secret_access_key= secret_key,region_name=aws_region)
 
 	# Upload custom log file to S3
-	s3.upload_file('audit_logs.csv', 'dataops-target-bucket', 'logs/audit_logs.csv')
+	s3.upload_file('audit_logs.csv', 'dataops-source-bucket', 'logs/audit_logs.csv')
 	logging.info('Custom log file saved to S3 successfully.')
 
 except Exception as e:
