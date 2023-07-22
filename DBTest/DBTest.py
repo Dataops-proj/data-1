@@ -92,6 +92,11 @@ try:
 
 	logging.info('Data Transformation completed successfully')
 
+	# Get database credentials from Vault
+	database_cred_t = client.read('kv/data/data/t_database')['data']['data']
+	username_t = database_cred_t.get('username')
+	password_t = database_cred_t.get('password')
+
 	#writing the dataframe to RDS 
 	df.write.format('jdbc').mode('overwrite').option('url', 'jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('driver', 'org.postgresql.Driver').option('dbtable', 'dbtodb5').option('user', username_t).option('password', password_t).save()
 
