@@ -89,7 +89,7 @@ try:
 	sc._jsc.hadoopConfiguration().set('fs.s3a.endpoint', 's3.' + aws_region + '.amazonaws.com')
 
 	#writing the dataframe to s3 bucket
-	df.write.mode('None').format('None').save('s3a://None/None/None')
+	df.write.mode('overwrite').format('parquet').save('s3a://dataops-target-bucket/ritesh/')
 
 	logging.info('Data written to S3 bucket successfully')
 	logging.info('Data processing pipeline completed.')
@@ -98,7 +98,7 @@ try:
 	s3 = boto3.client('s3', aws_access_key_id= access_key, aws_secret_access_key= secret_key,region_name=aws_region)
 
 	# Upload custom log file to S3
-	s3.upload_file('audit_logs.csv', 'None', 'logs/audit_logs.csv')
+	s3.upload_file('audit_logs.csv', 'dataops-target-bucket', 'logs/audit_logs.csv')
 	logging.info('Custom log file saved to S3 successfully.')
 
 except Exception as e:
