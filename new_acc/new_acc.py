@@ -37,7 +37,7 @@ with open("audit_logs.csv", "r+") as f:
 try:
 	logging.info('Starting data processing pipeline...')
 
-	spark=SparkSession.builder.appName('DATA-OPS').config("spark.jars.packages", "org.postgresql:postgresql:42.6.0").getOrCreate()
+	spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
 	sc = spark.sparkContext
 	logging.info('Spark Context is created')
 
@@ -58,7 +58,7 @@ try:
 
 	logging.info('AWS S3 credentials and database authenticated from Hvac Vault')
 
-	df = spark.read.format('jdbc').option('url', 'jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('driver', 'org.postgresql.Driver').option('query', 'select * from u22').option('user', 'username_s').option('password', 'password_s').load()
+	df = spark.read.format('jdbc').option('url', 'jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('driver', 'org.postgresql.Driver').option('dbtable', 'us_500').option('user', username_s).option('password', password_s).load()
 
 	#Validation-notempty
 	df = df.filter(~col('first_name').isNull()).limit(100)
@@ -83,17 +83,17 @@ try:
 
 	logging.info('Data Transformation completed successfully')
 
-	#writing the dataframe to s3 bucket
-	df.write.mode('overwrite').format('parquet').save('s3a://dataops-target-bucket/ritesh/')
+	#writing the dataframe to RDS 
+	df.write.format('jdbc').mode('overwrite').option('url', 'jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('driver', 'org.postgresql.Driver').option('dbtable', 'us1').option('user', username_t).option('password', password_t).save()
 
-	logging.info('Data written to S3 bucket successfully')
+	logging.info('Data written to RDS successfully')
 	logging.info('Data processing pipeline completed.')
 
 	#Move custom log file to S3 bucket 
 	s3 = boto3.client('s3', aws_access_key_id= access_key, aws_secret_access_key= secret_key,region_name=aws_region)
 
 	# Upload custom log file to S3
-	s3.upload_file('audit_logs.csv', 'dataops-target-bucket', 'logs/audit_logs.csv')
+	s3.upload_file('audit_logs.csv', 'dataops-source-bucket', 'logs/audit_logs.csv')
 	logging.info('Custom log file saved to S3 successfully.')
 
 except Exception as e:
