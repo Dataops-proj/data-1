@@ -1,3 +1,12 @@
+import sys 
+import os 
+import subprocess 
+
+os.mkdir('dataops') 
+modules = sys.argv[1:] 
+subprocess.run(['pip3', 'install', *modules, '--target', 'dataops']) 
+sys.path.insert(1, '/home/hadoop/dataops') 
+
 import hvac 
 import pytz 
 import boto3 
