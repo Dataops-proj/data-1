@@ -58,7 +58,7 @@ try:
 
 	logging.info('AWS S3 credentials and database authenticated from Hvac Vault')
 
-	df = spark.read.format('jdbc').option('url', 'jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('driver', 'org.postgresql.Driver').option('dbtable', 'us_500').option('user', username_s).option('password', password_s).load()
+	df = spark.read.format('jdbc').option('url', 'jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('driver', 'org.postgresql.Driver').option('dbtable', 'us').option('user', username_s).option('password', password_s).load()
 	logging.info(f'The file us-500.csv loaded successfully')
 
 	#Get the number of rows
@@ -93,7 +93,7 @@ try:
 	logging.info('Data Transformation completed successfully')
 
 	#writing the dataframe to RDS 
-	df.write.format('jdbc').mode('overwrite').option('url', 'jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('driver', 'org.postgresql.Driver').option('dbtable', 'us1').option('user', username_t).option('password', password_t).save()
+	df.write.format('jdbc').mode('overwrite').option('url', 'jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('driver', 'org.postgresql.Driver').option('dbtable', 'final_test_db_to_db').option('user', username_t).option('password', password_t).save()
 
 	logging.info('Data written to RDS successfully')
 	logging.info('Data processing pipeline completed.')
