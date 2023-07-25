@@ -92,7 +92,6 @@ try:
 
 	logging.info('Data Transformation completed successfully')
 
-	sc = spark.sparkContext
 	sc._jsc.hadoopConfiguration().set('fs.s3a.access.key', access_key)
 	sc._jsc.hadoopConfiguration().set('fs.s3a.secret.key', secret_key)
 	sc._jsc.hadoopConfiguration().set('fs.s3a.endpoint', 's3.' + aws_region + '.amazonaws.com')
