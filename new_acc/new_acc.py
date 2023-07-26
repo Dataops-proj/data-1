@@ -46,20 +46,20 @@ try:
 
 	client = hvac.Client(url=url_dcp, token=token_dcp)
 	s_s3_credentials = client.read('kv/data/data/S3_credentials')['data']['data']
+	database_cred_s = client.read('kv/data/data/s_database')['data']['data']
+	database_cred_t = client.read('kv/data/data/t_database')['data']['data']
+	username_s = database_cred_s.get('username')
+	password_s = database_cred_s.get('password')
+	username_t = database_cred_t.get('username')
+	password_t = database_cred_t.get('password')
 	access_key = s_s3_credentials.get('aws_access_key_id')
 	secret_key = s_s3_credentials.get('aws_secret_access_key')
 	aws_region = 'ap-south-1'
-	logging.info('AWS S3 credentials authenticated from Hvac Vault')
 
-	#Configure Spark to use AWS S3 credentials
+	logging.info('AWS S3 credentials and database authenticated from Hvac Vault')
 
-	sc._jsc.hadoopConfiguration().set('fs.s3a.access.key', access_key)
-	sc._jsc.hadoopConfiguration().set('fs.s3a.secret.key', secret_key)
-	sc._jsc.hadoopConfiguration().set('fs.s3a.endpoint', 's3.' + aws_region + '.amazonaws.com')
-
-	#Read data from S3 bucket
-	df = spark.read.format('csv').options(header='True').load('s3://dataops-source-bucket/us-500.csv')
-	logging.info('The file us-500.csv loaded from S3 bucket successfully')
+	df = spark.read.format('jdbc').option('url', 'jdbc:postgres://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('driver', 'org.postgresql.Driver').option('dbtable', 'us').option('user', username_s).option('password', password_s).load()
+	logging.info(f'The file us-500.csv loaded successfully')
 
 	#Get the number of rows
 	num_rows = df.count()
@@ -92,13 +92,8 @@ try:
 
 	logging.info('Data Transformation completed successfully')
 
-	# Get database credentials from Vault
-	database_cred_t = client.read('kv/data/data/t_database')['data']['data']
-	username_t = database_cred_t.get('username')
-	password_t = database_cred_t.get('password')
-
 	#writing the dataframe to RDS 
-	df.write.format('jdbc').mode('overwrite').option('url', 'jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('driver', 'org.postgresql.Driver').option('dbtable', 'final_test_s3_to_db').option('user', username_t).option('password', password_t).save()
+	df.write.format('jdbc').mode('overwrite').option('url', '').option('driver', 'org.mariadb.jdbc.Driver').option('dbtable', 'postgres_to_mariadb').option('user', username_t).option('password', password_t).save()
 
 	logging.info('Data written to RDS successfully')
 	logging.info('Data processing pipeline completed.')
