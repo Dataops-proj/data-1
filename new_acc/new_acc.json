@@ -13,7 +13,7 @@
     "--job-bookmark-option": "job-bookmark-disable",
     "--job-language": "python",
     "--additional-python-modules": "hvac==1.1.1,pyspark==3.4.1,datetime==5.2,pybase64==1.2.3",
-    "--packages": "org.postgresql:postgresql:42.6.0"
+    "--packages": "org.postgresql:postgresql:42.6.0,org.mariadb.jdbc:mariadb-java-client:3.1.4"
   },
   "maxRetries": 0,
   "timeout": 2880,
