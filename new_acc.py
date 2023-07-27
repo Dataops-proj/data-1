@@ -67,7 +67,7 @@ try:
 
 	logging.info('AWS S3 credentials and database authenticated from Hvac Vault')
 
-	df = spark.read.format('jdbc').option('url', 'jdbc:postgres://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('driver', 'org.postgresql.Driver').option('dbtable', 'us').option('user', username_s).option('password', password_s).load()
+	df = spark.read.format('jdbc').option('url', '').option('driver', 'org.postgresql.Driver,com.mysql.cj.jdbc.Driver,org.mariadb.jdbc.Driver,com.microsoft.sqlserver.jdbc.SQLServerDriver,oracle.jdbc.OracleDriver').option('dbtable', 'us').option('user', username_s).option('password', password_s).load()
 	logging.info(f'The file us-500.csv loaded successfully')
 
 	#Get the number of rows
@@ -102,7 +102,7 @@ try:
 	logging.info('Data Transformation completed successfully')
 
 	#writing the dataframe to RDS 
-	df.write.format('jdbc').mode('overwrite').option('url', 'jdbc:mariadb://dataopsmariadb.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:3306/mariadb').option('driver', 'org.mariadb.jdbc.Driver').option('dbtable', 'postgres_to_mariadb').option('user', username_t).option('password', password_t).save()
+	df.write.format('jdbc').mode('overwrite').option('url', 'jdbc:dataops://dataopsmariadb.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:3306/dataops').option('driver', 'org.postgresql.Driver,com.mysql.cj.jdbc.Driver,org.mariadb.jdbc.Driver,com.microsoft.sqlserver.jdbc.SQLServerDriver,oracle.jdbc.OracleDriver').option('dbtable', 'postgres_to_mariadb').option('user', username_t).option('password', password_t).save()
 
 	logging.info('Data written to RDS successfully')
 	logging.info('Data processing pipeline completed.')
