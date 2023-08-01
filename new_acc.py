@@ -46,7 +46,8 @@ with open("audit_logs.csv", "r+") as f:
 try:
 	logging.info('Starting data processing pipeline...')
 
-	spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()"n	sc = spark.sparkContext
+	spark=SparkSession.builder.appName('DATA-OPS').getOrCreate()
+	sc = spark.sparkContext
 	logging.info('Spark Context is created')
 
 	url_dcp = base64.b64decode('aHR0cDovLzU0LjE4NC43Ny4xNDY6ODIwMA==').decode('utf-8')
