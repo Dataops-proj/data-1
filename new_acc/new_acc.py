@@ -45,7 +45,7 @@ try:
 	token_dcp = base64.b64decode('cy5WbkNERVNOc1d3S25JQkF0T1JHNmJKaUQ=').decode('utf-8')
 
 	client = hvac.Client(url=url_dcp, token=token_dcp)
-	s_s3_credentials = client.read('kv/data/data/dataops-source-bucket')['data']['data']
+	s_s3_credentials = client.read('dataops/data/data/dataops-source-bucket')['data']['data']
 	s_access_key = s_s3_credentials.get('aws_access_key_id')
 	s_secret_key = s_s3_credentials.get('aws_secret_access_key')
 	logging.info('AWS S3 credentials authenticated from Hvac Vault')
@@ -103,7 +103,7 @@ try:
 	logging.info('Data processing pipeline completed.')
 
 	#Move custom log file to S3 bucket
-	logs_credentials = client.read('kv/data/data/Logs_credentials')['data']['data']
+	logs_credentials = client.read('dataops/data/data/Logs_credentials')['data']['data']
 	access_key = Logs_credentials.get('aws_access_key_id')
 	secret_key = Logs_credentials.get('aws_secret_access_key')
 	aws_region = 'ap-south-1'
