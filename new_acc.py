@@ -107,7 +107,7 @@ try:
 	logging.info('Data written to S3 bucket successfully')
 	logging.info('Data processing pipeline completed.')
 
-	#Move custom log file to S3 bucket 
+	#Move custom log file to S3 bucket
 	s3 = boto3.client('s3', aws_access_key_id= access_key, aws_secret_access_key= secret_key,region_name=aws_region)
 
 	# Upload custom log file to S3
