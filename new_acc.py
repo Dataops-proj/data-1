@@ -70,13 +70,13 @@ try:
 	df = spark.read.format('csv').options(header='True').load('s3://dataops-source-bucket/us-500.csv')
 	logging.info('The file us-500.csv loaded from S3 bucket successfully')
 
-	#Get the number of rows
-	num_rows = df.count()
-	logging.info(f'Number of rows in the file: {num_rows}')
+	 #Get the number of rows
+	 num_rows = df.count()
+	 logging.info(f'Number of rows in the file: {num_rows}')
 
-	# Get the number of columns
-	num_cols = len(df.schema.fields)
-	logging.info(f'Number of columns in the file: {num_cols}')
+	 # Get the number of columns
+	 num_cols = len(df.schema.fields)
+	 logging.info(f'Number of columns in the file: {num_cols}')
 
 	#Validation-notempty
 	df = df.filter(~col('first_name').isNull()).limit(100)
