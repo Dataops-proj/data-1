@@ -46,11 +46,8 @@ try:
 
 	client = hvac.Client(url=url_dcp, token=token_dcp)
 	s_s3_credentials = client.read('kv/data/data/dataops-source-bucket')['data']['data']
-	t_s3_credentials = client.read('kv/data/data/S3_credentials')['data']['data']
 	s_access_key = s_s3_credentials.get('aws_access_key_id')
 	s_secret_key = s_s3_credentials.get('aws_secret_access_key')
-	t_access_key = t_s3_credentials.get('aws_access_key_id')
-	t_secret_key = t_s3_credentials.get('aws_secret_access_key')
 	logging.info('AWS S3 credentials authenticated from Hvac Vault')
 
 	#Configure Spark to use AWS S3 credentials
