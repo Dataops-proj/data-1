@@ -54,17 +54,15 @@ try:
 	token_dcp = base64.b64decode('cy5WbkNERVNOc1d3S25JQkF0T1JHNmJKaUQ=').decode('utf-8')
 
 	client = hvac.Client(url=url_dcp, token=token_dcp)
-	s_s3_credentials = client.read('kv/data/data/S3_credentials')['data']['data']
-	access_key = s_s3_credentials.get('aws_access_key_id')
-	secret_key = s_s3_credentials.get('aws_secret_access_key')
-	aws_region = 'ap-south-1'
+	s_s3_credentials = client.read('dataops/data/data/dataops-source-bucket')['data']['data']
+	s_access_key = s_s3_credentials.get('aws_access_key_id')
+	s_secret_key = s_s3_credentials.get('aws_secret_access_key')
 	logging.info('AWS S3 credentials authenticated from Hvac Vault')
 
 	#Configure Spark to use AWS S3 credentials
 
-	sc._jsc.hadoopConfiguration().set('fs.s3a.access.key', access_key)
-	sc._jsc.hadoopConfiguration().set('fs.s3a.secret.key', secret_key)
-	sc._jsc.hadoopConfiguration().set('fs.s3a.endpoint', 's3.' + aws_region + '.amazonaws.com')
+	sc._jsc.hadoopConfiguration().set('fs.s3a.access.key', s_access_key)
+	sc._jsc.hadoopConfiguration().set('fs.s3a.secret.key', s_secret_key)
 
 	#Read data from S3 bucket
 	df = spark.read.format('csv').options(header='True').load('s3://dataops-source-bucket/us-500.csv')
@@ -100,6 +98,12 @@ try:
 		df = df.withColumn('FULLNAME', concat("first_name", "last_name"))
 
 	logging.info('Data Transformation completed successfully')
+	t_s3_credentials = client.read('dataops/data/data/dataops-target-bucket')['data']['data']
+	t_access_key = t_s3_credentials.get('aws_access_key_id')
+	t_secret_key = t_s3_credentials.get('aws_secret_access_key')
+
+	sc._jsc.hadoopConfiguration().set('fs.s3a.access.key', t_access_key)
+	sc._jsc.hadoopConfiguration().set('fs.s3a.secret.key', t_secret_key)
 
 	#writing the dataframe to s3 bucket
 	df.write.mode('overwrite').format('csv').save('s3a://dataops-target-bucket/ritesh/')
@@ -108,6 +112,10 @@ try:
 	logging.info('Data processing pipeline completed.')
 
 	#Move custom log file to S3 bucket
+	logs_credentials = client.read('kv/data/data/Logs_credentials')['data']['data']
+	access_key = logs_credentials.get('aws_access_key_id')
+	secret_key = logs_credentials.get('aws_secret_access_key')
+	aws_region = 'ap-south-1'
 	s3 = boto3.client('s3', aws_access_key_id= access_key, aws_secret_access_key= secret_key,region_name=aws_region)
 
 	# Upload custom log file to S3
