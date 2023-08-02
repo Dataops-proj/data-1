@@ -90,19 +90,8 @@ try:
 
 	logging.info('Data Transformation completed successfully')
 
-	# Get database credentials from Vault
-	database_credentials_target = client.read('dataops/data/data/dataopsmysql.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com')['data']['data']
-	username_t = database_credentials_target.get('username')
-	password_t = database_credentials_target.get('password')
-
-	#writing the dataframe to RDS
-	df.write.format('jdbc').mode('overwrite').option('url', 'jdbc:postgresql://dataopsmysql.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:3306/postgres').option('driver', 'org.postgresql.Driver').option('dbtable', 's3_to_postgresql_test_august_2').option('user', username_t).option('password', password_t).save()
-
-	logging.info('Data written to RDS successfully')
-	logging.info('Data processing pipeline completed.')
-
 	# Move custom log file to S3 bucket
-	logs_credentials = client.read('kv/data/data/Logs_credentials')['data']['data']
+	logs_credentials = lient.secrets.kv.v2.read_secret(mount_point = 'kv', path=data/{}')['data']['data']
 	access_key = logs_credentials.get('aws_access_key_id')
 	secret_key = logs_credentials.get('aws_secret_access_key')
 	aws_region = 'ap-south-1'
