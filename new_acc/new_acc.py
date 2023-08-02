@@ -101,10 +101,8 @@ try:
 	logging.info('Data written to RDS successfully')
 	logging.info('Data processing pipeline completed.')
 
-	logging.info('Data Transformation completed successfully')
-
 	# Move custom log file to S3 bucket
-	logs_credentials = client.secrets.kv.v2.read_secret(mount_point = 'kv', path = 'data/{}')['data']['data']
+	logs_credentials = client.secrets.kv.v2.read_secret(mount_point = 'kv', path = 'data/dataops-source-bucket')['data']['data']
 	access_key = logs_credentials.get('aws_access_key_id')
 	secret_key = logs_credentials.get('aws_secret_access_key')
 	aws_region = 'ap-south-1'
