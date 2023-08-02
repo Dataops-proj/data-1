@@ -6,7 +6,7 @@
   },
   "command": {
     "name": "glueetl",
-    "scriptLocation": "s3://dataops-source-bucket/new_acc.py",
+    "scriptLocation": "s3://dataops-source-bucket/glue/scripts/new_acc.py",
     "pythonVersion": "3"
   },
   "defaultArguments": {
