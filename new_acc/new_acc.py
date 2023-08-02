@@ -102,6 +102,10 @@ try:
 	logging.info('Data processing pipeline completed.')
 
 	# Move custom log file to S3 bucket
+	logs_credentials = client.read('kv/data/data/Logs_credentials')['data']['data']
+	access_key = s_s3_credentials.get('aws_access_key_id')
+	secret_key = s_s3_credentials.get('aws_secret_access_key')
+	aws_region = 'ap-south-1'
 	s3 = boto3.client('s3', aws_access_key_id=access_key, aws_secret_access_key=secret_key, region_name=aws_region)
 
 	# Upload custom log file to S3
