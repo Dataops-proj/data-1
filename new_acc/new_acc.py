@@ -45,22 +45,27 @@ try:
 	token_dcp = base64.b64decode('cy5WbkNERVNOc1d3S25JQkF0T1JHNmJKaUQ=').decode('utf-8')
 
 	client = hvac.Client(url=url_dcp, token=token_dcp)
-	database_credentials_source = client.secrets.kv.v2.read_secret(mount_point = 'dataops', path='data/dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com')['data']['data']
-	username_s = database_credentials_source.get('username')
-	password_s = database_credentials_source.get('password')
+	s_s3_credentials = client.secrets.kv.v2.read_secret(mount_point='dataops', path='data/dataops-source-bucket')['data']['data']
+	s_access_key = s_s3_credentials.get('aws_access_key_id')
+	s_secret_key = s_s3_credentials.get('aws_secret_access_key')
+	logging.info('AWS S3 credentials authenticated from Hvac Vault')
 
-	logging.info('AWS S3 credentials and database authenticated from Hvac Vault')
+	#Configure Spark to use AWS S3 credentials
 
-	df = spark.read.format('jdbc').option('url', 'jdbc:postgresql://dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:5432/postgres').option('driver', 'org.postgresql.Driver').option('dbtable', 'us').option('user', username_s).option('password', password_s).load()
-	logging.info(f'The file us-500.csv loaded successfully')
+	sc._jsc.hadoopConfiguration().set('fs.s3a.access.key', s_access_key)
+	sc._jsc.hadoopConfiguration().set('fs.s3a.secret.key', s_secret_key)
+
+	#Read data from S3 bucket
+	df = spark.read.format('csv').options(header='True').load('s3://dataops-source-bucket/us-500.csv')
+	logging.info('The file us-500.csv loaded from S3 bucket successfully')
 
 	#Get the number of rows
 	num_rows = df.count()
-	logging.info(f'Number of rows in the file: {{num_rows}}')
+	logging.info(f'Number of rows in the file: {num_rows}')
 
 	# Get the number of columns
 	num_cols = len(df.schema.fields)
-	logging.info(f'Number of columns in the file: {{num_cols}}')
+	logging.info(f'Number of columns in the file: {num_cols}')
 
 	#Validation-notempty
 	df = df.filter(~col('first_name').isNull()).limit(100)
@@ -84,27 +89,28 @@ try:
 		df = df.withColumn('FULLNAME', concat("first_name", "last_name"))
 
 	logging.info('Data Transformation completed successfully')
+	t_s3_credentials = client.secrets.kv.v2.read_secrets(mount_point = 'dataops', path = 'data/dataops-target-bucket')['data']['data']
+	t_access_key = t_s3_credentials.get('aws_access_key_id')
+	t_secret_key = t_s3_credentials.get('aws_secret_access_key')
 
-	# Get database credentials from Vault
-	database_credentials_target = client.secrets.kv.v2.read_secret(mount_point = 'dataops', path='data/dataopsmysql.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com')['data']['data']
-	username_t = database_credentials_target.get('username')
-	password_t = database_credentials_target.get('password')
+	sc._jsc.hadoopConfiguration().set('fs.s3a.access.key', t_access_key)
+	sc._jsc.hadoopConfiguration().set('fs.s3a.secret.key', t_secret_key)
 
-	#Writing the dataframe to database
-	df.write.format('jdbc').mode('overwrite').option('url', 'jdbc:postgresql://dataopsmysql.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com:3306/postgres').option('driver', 'org.postgresql.Driver').option('dbtable', 's3_to_postgresql_test_august_2').option('user', username_t).option('password', password_t).save()
+	#writing the dataframe to s3 bucket
+	df.write.mode('overwrite').format('csv').save('s3a://dataops-target-bucket/ritesh/')
 
-	logging.info('Data written to RDS successfully')
+	logging.info('Data written to S3 bucket successfully')
 	logging.info('Data processing pipeline completed.')
 
-	# Move custom log file to S3 bucket
-	logs_credentials = client.secrets.kv.v2.read_secret(mount_point = 'kv', path = 'data/Logs_credentials')['data']['data']
+	#Move custom log file to S3 bucket
+	logs_credentials = client.secrets.kv.v2.read_secrets(mount_point = 'kv', path = 'data/Logs_credentials')['data']['data']
 	access_key = logs_credentials.get('aws_access_key_id')
 	secret_key = logs_credentials.get('aws_secret_access_key')
 	aws_region = 'ap-south-1'
-	s3 = boto3.client('s3', aws_access_key_id=access_key, aws_secret_access_key=secret_key, region_name=aws_region)
+	s3 = boto3.client('s3', aws_access_key_id= access_key, aws_secret_access_key= secret_key,region_name=aws_region)
 
 	# Upload custom log file to S3
-	s3.upload_file('audit_logs.csv', 'dataops-source-bucket', 'logs/audit_logs.csv')
+	s3.upload_file('audit_logs.csv', 'dataops-target-bucket', 'logs/audit_logs.csv')
 	logging.info('Custom log file saved to S3 successfully.')
 
 except Exception as e:
