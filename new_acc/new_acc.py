@@ -45,7 +45,7 @@ try:
 	token_dcp = base64.b64decode('cy5WbkNERVNOc1d3S25JQkF0T1JHNmJKaUQ=').decode('utf-8')
 
 	client = hvac.Client(url=url_dcp, token=token_dcp)
-	database_credentials_source = client.secrets.kv.v2.read_secret(mount_point = 'dataops', path=data/dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com')['data']['data']
+	database_credentials_source = client.secrets.kv.v2.read_secret(mount_point = 'dataops', path='data/dataops-db.cr5bcibr4zvb.ap-south-1.rds.amazonaws.com')['data']['data']
 	username_s = database_credentials_source.get('username')
 	password_s = database_credentials_source.get('password')
 
