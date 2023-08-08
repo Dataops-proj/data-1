@@ -87,8 +87,6 @@ try:
 		df = df.withColumn('address', df['address'].cast('string'))
 		df = df.withColumn('city', df['city'].cast('string'))
 		df = df.withColumn('FULLNAME', concat("first_name", "last_name"))
-
-	logging.info('Data Transformation completed successfully')
 	t_s3_credentials = client.secrets.kv.v2.read_secrets(mount_point = 'dataops', path = 'data/dataops-target-bucket')['data']['data']
 	t_access_key = t_s3_credentials.get('aws_access_key_id')
 	t_secret_key = t_s3_credentials.get('aws_secret_access_key')
